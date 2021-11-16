@@ -52,7 +52,7 @@ class FullscreenCanvas {
         this.disableScale = disableScale;
 
         this.resizeHandlers = [];
-        this.handleResize = .debounce(this.handleResize.bind(this), 100);
+        this.handleResize =     .debounce(this.handleResize.bind(this), 100);
 
         this.adjust();
 
