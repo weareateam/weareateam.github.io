@@ -1,1 +1,399 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+</head>
+
+<style>
+  body {
+    font-family: "Bebas Neue", cursive;
+  }
+
+  h1 {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  input {
+    display: block;
+    margin: 20px auto;
+  }
+
+  section {
+    text-align: center;
+  }
+</style>
+
+<body id="myId">
+  <h1>MVP</h1>
+  <input type="color" id="color-picker" />
+  <section id="controls">
+    <button onclick="onConnectUsb()" id="connect-usb">
+      <i class="fa fa-usb" aria-hidden="true"></i>
+    </button>
+    <button onclick="onChangeColor()" id="change-color">&#8617</button>
+  </section>
+
+
+  <script>
+    let isConnectted = false;
+    let port;
+    let writer;
+    const enc = new TextEncoder();
+
+    async function onChangeColor() {
+      if (!isConnectted) {
+        alert("you must connect to the usb in order to use this.");
+        return;
+      }
+      try {
+        const colorHex = document.getElementById("color-picker").value;
+        const colorRgb = hexToRgb(colorHex);
+        const computerText = `${colorRgb.r}-${colorRgb.g}-${colorRgb.b}@`;
+        await writer.write(enc.encode(computerText));
+      } catch (e) {
+        console.log(e);
+        alert("could not write color");
+      }
+    }
+
+    async function onConnectUsb() {
+      try {
+        const requestOptions = {
+          // Filter on devices with the Arduino USB vendor ID.
+          filters: [{
+            usbVendorId: 0x2341
+          }],
+        };
+
+        // Request an Arduino from the user.
+        port = await navigator.serial.requestPort(requestOptions);
+        await port.open({
+          baudRate: 115200
+        });
+        writer = port.writable.getWriter();
+        isConnectted = true;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        } :
+        null;
+    }
+  </script>
+
+
+
+  <!-- CAMERA -->
+
+  <div style="text-align:center; margin-top: 100px">
+
+
+    <div><b>Results</b></div>
+    <!-- <div id="age">Age: -</div> -->
+    <!-- <div id="gender">Gender: -</div>-->
+    <div id="emotion">Emotion: -</div>
+    <br><br>
+    <div id="vecchiaia"> </div>
+    <div id="stato"> </div>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="chart"></canvas>
+  </div>
+
+  <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
+  <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
+
+
+  <script>
+
+  // grafico pole area
+  var data = {
+    labels: ["Rabbia", "Disgusto", "Paura", "Felicità", "Neutrale", "Triste", "Sorpreso"],
+    datasets: [{
+      label: "Dataset #1",
+      backgroundColor: "rgba(255,99,132,0.2)",
+      borderColor: "rgba(255,99,132,1)",
+      borderWidth: 2,
+      hoverBackgroundColor: "rgba(255,99,132,0.4)",
+      hoverBorderColor: "rgba(255,99,132,1)",
+      data: emozioniGrafico,
+    }]
+  };
+
+  var options = {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        stacked: true,
+        grid: {
+          display: true,
+          color: "rgba(255,99,132,0.2)"
+        }
+      },
+      x: {
+        grid: {
+          display: false
+        }
+      }
+    }
+  };
+
+  var graficoEmo = new Chart('chart', {
+    type: 'polarArea',
+    options: options,
+    data: data
+  });
+
+
+    var veta;
+    var vEmozione;
+
+    const config = {
+      initialWaitMs: 0,
+      periodMs: 5000
+    };
+
+
+    CY.loader()
+      .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
+      // .addModule(CY.modules().FACE_AGE.name)
+      // .addModule(CY.modules().FACE_GENDER.name)
+      .addModule(CY.modules().FACE_EMOTION.name)
+      .addModule(CY.modules().DATA_AGGREGATOR.name, config)
+      .load()
+      .then(({
+        start,
+        stop
+      }) => start());
+
+    var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
+
+    // parte di stampa dei valori medi
+    window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
+      var emozioni = [evt.detail.emotion_Angry.avg, evt.detail.emotion_Disgust.avg, evt.detail.emotion_Fear.avg, evt.detail.emotion_Happy.avg, evt.detail.emotion_Neutral.avg, evt.detail.emotion_Sad.avg, evt.detail.emotion_Surprise.avg]
+
+      const max = Math.max.apply(null, emozioni);
+
+      const index = emozioni.indexOf(max);
+
+      var emozioneMax
+
+      emozioniGrafico[index] = emozioniGrafico[index] + 1;
+
+      console.log(emozioniGrafico)
+
+
+      graficoEmo.data.datasets[0].data = emozioniGrafico
+      graficoEmo.update();
+
+      if (index == 0) {
+        emozioneMax = "Rabbia"
+        rabbia()
+      } else if (index == 1) {
+        emozioneMax = "Disgusto"
+        disgusto()
+      } else if (index == 2) {
+        emozioneMax = "Paura"
+        paura()
+      } else if (index == 3) {
+        emozioneMax = "Felicità"
+        felice()
+      } else if (index == 4) {
+        emozioneMax = "Neutrale"
+        neutrale()
+      } else if (index == 5) {
+        emozioneMax = "Triste"
+        triste()
+      } else if (index == 6) {
+        emozioneMax = "Sorpreso"
+        sorpreso()
+      }
+
+      // console.log('Emozione media:', emozioneMax);
+    });
+
+    // // stampo telecamera come canvas
+    // const canvas = document.createElement('canvas');
+    // document.body.appendChild(canvas);
+    //
+    // window.addEventListener(CY.modules().CAMERA.eventName, (evt) => {
+    //   const ctx = canvas.getContext('2d');
+    //   const imageData = evt.detail;
+    //   ctx.canvas.width = imageData.width;
+    //   ctx.canvas.height = imageData.height;
+    //   ctx.putImageData(imageData, 0, 0);
+    // });
+
+
+
+
+
+    // Controllo e attivo funzione quando bg color del body cambia
+    // var observer = new MutationObserver(function(mutations) {
+    //   mutations.forEach(function(mutationRecord) {
+    //
+    //     var bgColor = document.getElementById('myId').style.backgroundColor
+    //     console.log('style changed! ' + bgColor);
+    //
+    //     if (bgColor == "green") {
+    //       felice()
+    //     } else if (bgColor == "red") {
+    //       rabbia()
+    //     }
+    //   });
+    // });
+
+    // var target = document.getElementById('myId');
+    // observer.observe(target, {
+    //   attributes: true,
+    //   attributeFilter: ['style']
+    // });
+
+
+
+    // const age_div = document.querySelector("#age");
+    // const gen_div = document.querySelector("#gender");
+    const emo_div = document.querySelector("#emotion");
+
+    // window.addEventListener(CY.modules().FACE_AGE.eventName, (evt) => {
+    //  age_div.innerHTML = 'Age: ' + evt.detail.output.numericAge;
+    //
+    //
+    //
+    // });
+    //
+    // window.addEventListener(CY.modules().FACE_GENDER.eventName, (evt) => {
+    //  gen_div.innerHTML = 'Gender: ' + evt.detail.output.mostConfident;
+    // });
+
+
+
+
+    // window.addEventListener(CY.modules().FACE_EMOTION.eventName, (evt) => {
+    //   emo_div.innerHTML = 'Emotion: ' + evt.detail.output.dominantEmotion;
+    //
+    //   // for (var i = 0; i < 100; i++) {
+    //   vEmozione = evt.detail.output.dominantEmotion;
+    //
+    //   if (vEmozione == "Happy") {
+    //     $("body").css("background", "green")
+    //   } else if (vEmozione == "Angry") {
+    //     $("body").css("background", "red")
+    //   }
+    //
+    //   // }
+    // });
+
+
+
+    // // Perform change
+    // $('element').css('background', 'red');
+
+    // function etapiu() {
+    // document.getElementById('vecchiaia').innerHTML = "<b>SEI UN VECCHIO SCEMO</b>";
+    // return;
+    // }
+    // function etameno() {
+    // document.getElementById('vecchiaia').innerHTML = "<b>SEI UN GIOVANE FIKO</b>";
+    // return;
+    // }
+
+    async function felice() {
+      document.getElementById('stato').innerHTML = "<b>FELICE</b>";
+      $("body").css("background", "green")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-255-0@`));
+        return;
+      }
+      return;
+    }
+
+
+    async function rabbia() {
+      document.getElementById('stato').innerHTML = "<b>ARRABBIATO</b>";
+      $("body").css("background", "red")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-0-0@`));
+        return;
+      }
+      return;
+    }
+
+    async function triste() {
+      document.getElementById('stato').innerHTML = "<b>TRISTE</b>";
+      $("body").css("background", "blue")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-0-255@`));
+        return;
+      }
+      return;
+    }
+
+    async function disgusto() {
+      document.getElementById('stato').innerHTML = "<b>DISGUSTATO</b>";
+      $("body").css("background", "yellow")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-255-0@`));
+        return;
+      }
+      return;
+    }
+
+    async function neutrale() {
+      document.getElementById('stato').innerHTML = "<b>NEUTRALE</b>";
+      $("body").css("background", "white")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-255-255@`));
+        return;
+      }
+      return;
+    }
+
+    async function paura() {
+      document.getElementById('stato').innerHTML = "<b>IMPAURITO</b>";
+      $("body").css("background", "magenta")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-0-255@`));
+        return;
+      }
+      return;
+    }
+
+    async function sorpreso() {
+      document.getElementById('stato').innerHTML = "<b>SORPRESO</b>";
+      $("body").css("background", "cyan")
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-255-255@`));
+        return;
+      }
+      return;
+    }
+  </script>
+
+</body>
+
+</html>
