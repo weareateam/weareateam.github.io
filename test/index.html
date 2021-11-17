@@ -28,9 +28,15 @@
 
   <!-- CAMERA -->
 
-  <div style="text-align:center; margin-top: 50px">
+  <!-- <div style="width: 100px; height: 100px; margin-left: calc(50% - 50px);" id="colore"></div> -->
 
-    <div><b>Results:</b></div>
+  <div class="chart-container" style="width: 90%;margin-left: 5%;">
+    <canvas id="chart" style="height: 300px;"></canvas>
+  </div>
+
+     <div style="text-align:center; margin-top: 50px">
+
+  <h1 style="color: white;mix-blend-mode: exclusion;">RESULTS</h1>
     <!-- <div id="age">Age: -</div> -->
     <!-- <div id="gender">Gender: -</div>-->
     <div id="emotion" style="color: white; mix-blend-mode: exclusion">Emotion: </div>
@@ -38,13 +44,7 @@
     <!-- <div id="vecchiaia"> </div>
     <div id="stato"> </div> -->
   </div>
-
-  <!-- <div style="width: 100px; height: 100px; margin-left: calc(50% - 50px);" id="colore"></div> -->
-
-  <div class="chart-container" style="width: 90%;margin-left: 5%;">
-    <canvas id="chart" style="height: 300px;"></canvas>
-  </div>
-
+    
 </div>
   
   <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw">
