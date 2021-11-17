@@ -1,26 +1,37 @@
-$.fn.typewriter = function() {
-  this.each(function() {
-    var c = $(this),
-      b = c.html(),
-      a = 0,
-      d = 0;
-    c.html("");
-    var e = function() {
-      if ("<" == b.substring(a, a + 1)) {
-        var f = new RegExp(/<span class="instant"/),
-          g = new RegExp(/<span class="clear"/);
-        if (b.substring(a, b.length).match(f)) a += b.substring(a, b.length).indexOf("</span>") + 7;
-        else if (b.substring(a, b.length).match(g)) d = a, a += b.substring(a, b.length).indexOf("</span>") + 7;
-        else
-          for (;
-            ">" != b.substring(a, a + 1);) a++
-      }
-      c.html(b.substring(d, a++) + (a & 1 ? "_" : ""));
-      a >= b.length || setTimeout(e, 70 + 100 *
-        Math.random())
-    };
-    e()
-  });
-  return this
-};
-$(".terminal").typewriter();
+var aText = new Array(
+  "Benvenuto,",
+  "rilassati e preparati.",
+  "Sarà un'esperienza piacevole."
+  );
+  var iSpeed = 100; 
+  var iIndex = 0; 
+  var iArrLength = aText[0].length; 
+  var iScrollAt = 20; 
+   
+  var iTextPos = 0; 
+  var sContents = ''; 
+  var iRow; 
+
+  function typewriter()
+  {
+   sContents =  ' ';
+   iRow = Math.max(0, iIndex-iScrollAt);
+   var destination = document.getElementById("typedtext");
+   
+   while ( iRow < iIndex ) {
+    sContents += aText[iRow++] + '<br />';
+   }
+
+   destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos) + "_";
+
+   if ( iTextPos++ == iArrLength ) {
+    iTextPos = 0;
+    iIndex++;
+    if ( iIndex != aText.length ) {
+     iArrLength = aText[iIndex].length;
+     setTimeout("typewriter()", 500);
+    }
+   } else {
+    setTimeout("typewriter()", iSpeed);
+   }
+  }
