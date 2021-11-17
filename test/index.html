@@ -3,119 +3,191 @@
 
 <head>
   <!-- <script src="p5.js"></script>
-  <script src="p5.sound.min.js"></script> -->
+    <script src="p5.sound.min.js"></script> -->
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
 </head>
 
+<style>
+  :root {
+    --color-1: rgba(255, 0, 255, 1);
+    --color-2: rgba(255, 0, 255, 0);
+  }
+
+  .prova1 {
+    stop-color: var(--color-1);
+    transition: 0.2s all;
+  }
+
+  .prova2 {
+    stop-color: var(--color-2);
+    transition: 0.2s all;
+  }
+
+  body {
+    font-family: "Bebas Neue", cursive;
+    background-color: black;
+  }
+
+  h1 {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  input {
+    display: block;
+    margin: 20px auto;
+  }
+
+  section {
+    text-align: center;
+  }
+</style>
+
 <body id="myId">
-  <div class="contenitore">
-
-    <h1>MVP</h1>
-    <input type="color" id="color-picker" />
-    <section id="controls">
-      <button onclick="onConnectUsb()" id="connect-usb">
-        <i class="fa fa-usb" aria-hidden="true"></i>
-      </button>
-      <button onclick="onChangeColor()" id="change-color">&#8617</button>
-    </section>
+  <h1 style="color: white;mix-blend-mode: exclusion;">MVP FINAL DESIGN STUDIO</h1>
+  <input type="color" id="color-picker" />
+  <section id="controls">
+    <button onclick="onConnectUsb()" id="connect-usb">
+      <i class="fa fa-usb" aria-hidden="true"></i>
+    </button>
+    <button onclick="onChangeColor()" id="change-color">Change Color</button>
+  </section>
 
 
-    <script>
-      let isConnectted = false;
-      let port;
-      let writer;
-      const enc = new TextEncoder();
+  <script>
+    let isConnectted = false;
+    let port;
+    let writer;
+    const enc = new TextEncoder();
 
-      async function onChangeColor() {
-        if (!isConnectted) {
-          alert("you must connect to the usb in order to use this.");
-          return;
-        }
-        try {
-          const colorHex = document.getElementById("color-picker").value;
-          const colorRgb = hexToRgb(colorHex);
-          const computerText = `${colorRgb.r}-${colorRgb.g}-${colorRgb.b}@`;
-          await writer.write(enc.encode(computerText));
-        } catch (e) {
-          console.log(e);
-          alert("could not write color");
-        }
+    async function onChangeColor() {
+      if (!isConnectted) {
+        alert("you must connect to the usb in order to use this.");
+        return;
       }
-
-      async function onConnectUsb() {
-        try {
-          const requestOptions = {
-            // Filter on devices with the Arduino USB vendor ID.
-            filters: [{
-              usbVendorId: 0x2341
-            }],
-          };
-
-          // Request an Arduino from the user.
-          port = await navigator.serial.requestPort(requestOptions);
-          await port.open({
-            baudRate: 115200
-          });
-          writer = port.writable.getWriter();
-          isConnectted = true;
-        } catch (e) {
-          console.log(e);
-        }
+      try {
+        const colorHex = document.getElementById("color-picker").value;
+        const colorRgb = hexToRgb(colorHex);
+        const computerText = `${colorRgb.r}-${colorRgb.g}-${colorRgb.b}@`;
+        await writer.write(enc.encode(computerText));
+      } catch (e) {
+        console.log(e);
+        alert("could not write color");
       }
+    }
 
-      function hexToRgb(hex) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16),
-          } :
-          null;
+    async function onConnectUsb() {
+      try {
+        const requestOptions = {
+          // Filter on devices with the Arduino USB vendor ID.
+          filters: [{
+            usbVendorId: 0x2341
+          }],
+        };
+
+        // Request an Arduino from the user.
+        port = await navigator.serial.requestPort(requestOptions);
+        await port.open({
+          baudRate: 115200
+        });
+        writer = port.writable.getWriter();
+        isConnectted = true;
+      } catch (e) {
+        console.log(e);
       }
-    </script>
+    }
+
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        } :
+        null;
+    }
+  </script>
 
 
 
-    <!-- CAMERA -->
+  <!-- CAMERA -->
 
-    <div style="text-align:center; margin-top: 100px">
-
-
-      <div><b>Results</b></div>
-      <!-- <div id="age">Age: -</div> -->
-      <!-- <div id="gender">Gender: -</div>-->
-      <div id="emotion">Emotion: -</div>
-      <br><br>
-      <div id="vecchiaia"> </div>
-      <div id="stato"> </div>
-    </div>
-
-    <div class="chart-container">
-      <canvas id="chart"></canvas>
-    </div>
-
-    <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
-    <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
+  <div style="text-align:center; margin-top: 100px">
 
 
-    <script>
+    <div><b>Results:</b></div>
+    <!-- <div id="age">Age: -</div> -->
+    <!-- <div id="gender">Gender: -</div>-->
+    <div id="emotion" style="color: white; mix-blend-mode: exclusion">Emotion: </div>
+    <br><br>
+    <!-- <div id="vecchiaia"> </div>
+    <div id="stato"> </div> -->
+  </div>
 
-    // grafico pole area
+  <!-- <div style="width: 100px; height: 100px; margin-left: calc(50% - 50px);" id="colore"></div> -->
+
+  <div class="chart-container" style="width: 90%;margin-left: 5%;">
+    <canvas id="chart" style="height: 300px;"></canvas>
+  </div>
+
+
+  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop class="prova1" offset="0%"></stop>
+          <stop class="prova2" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop class="prova1" offset="0%"></stop>
+          <stop class="prova2" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
+          <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
+          <stop class="prova1" offset="0%"></stop>
+          <stop class="prova2" offset="100%"></stop>
+        </radialGradient>
+      </defs>
+
+      <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)">
+        <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite"></animateTransform>
+      </rect>
+      <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)" transform="rotate(255.072 50 50)">
+        <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s" repeatCount="indefinite"></animateTransform>
+      </rect>
+      <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)" transform="rotate(139.903 50 50)">
+        <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
+        <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s" repeatCount="indefinite"></animateTransform>
+      </rect>
+    </svg>
+  </div>
+
+  <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
+  <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
+
+
+  <script>
+    // grafico
     var data = {
-      labels: ["Rabbia", "Disgusto", "Paura", "Felicità", "Neutrale", "Triste", "Sorpreso"],
+      labels: checker,
       datasets: [{
-        label: "Dataset #1",
-        backgroundColor: "rgba(255,99,132,0.2)",
-        borderColor: "rgba(255,99,132,1)",
-        borderWidth: 2,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
+        label: "Andamento emozioni",
+        borderColor: "rgba(255,255,255,1)",
+        borderWidth: 5,
         data: emozioniGrafico,
+        stepped: true,
       }]
     };
 
@@ -123,10 +195,8 @@
       maintainAspectRatio: false,
       scales: {
         y: {
-          stacked: true,
           grid: {
-            display: true,
-            color: "rgba(255,99,132,0.2)"
+            display: false
           }
         },
         x: {
@@ -138,245 +208,209 @@
     };
 
     var graficoEmo = new Chart('chart', {
-      type: 'polarArea',
+      type: 'line',
       options: options,
       data: data
     });
 
 
-      var veta;
-      var vEmozione;
+    var veta;
+    var vEmozione;
 
-      const config = {
-        initialWaitMs: 0,
-        periodMs: 5000
-      };
-
-
-      CY.loader()
-        .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
-        // .addModule(CY.modules().FACE_AGE.name)
-        // .addModule(CY.modules().FACE_GENDER.name)
-        .addModule(CY.modules().FACE_EMOTION.name)
-        .addModule(CY.modules().DATA_AGGREGATOR.name, config)
-        .load()
-        .then(({
-          start,
-          stop
-        }) => start());
-
-      var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
-
-      // parte di stampa dei valori medi
-      window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
-        var emozioni = [evt.detail.emotion_Angry.avg, evt.detail.emotion_Disgust.avg, evt.detail.emotion_Fear.avg, evt.detail.emotion_Happy.avg, evt.detail.emotion_Neutral.avg, evt.detail.emotion_Sad.avg, evt.detail.emotion_Surprise.avg]
-
-        const max = Math.max.apply(null, emozioni);
-
-        const index = emozioni.indexOf(max);
-
-        var emozioneMax
-
-        emozioniGrafico[index] = emozioniGrafico[index] + 1;
-
-        console.log(emozioniGrafico)
+    const config = {
+      initialWaitMs: 0,
+      periodMs: 2500
+    };
 
 
-        graficoEmo.data.datasets[0].data = emozioniGrafico
-        graficoEmo.update();
+    CY.loader()
+      .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
+      // .addModule(CY.modules().FACE_AGE.name)
+      // .addModule(CY.modules().FACE_GENDER.name)
+      .addModule(CY.modules().FACE_EMOTION.name)
+      .addModule(CY.modules().DATA_AGGREGATOR.name, config)
+      .load()
+      .then(({
+        start,
+        stop
+      }) => start());
 
-        if (index == 0) {
-          emozioneMax = "Rabbia"
-          rabbia()
-        } else if (index == 1) {
-          emozioneMax = "Disgusto"
-          disgusto()
-        } else if (index == 2) {
-          emozioneMax = "Paura"
-          paura()
-        } else if (index == 3) {
-          emozioneMax = "Felicità"
-          felice()
-        } else if (index == 4) {
-          emozioneMax = "Neutrale"
-          neutrale()
-        } else if (index == 5) {
-          emozioneMax = "Triste"
-          triste()
-        } else if (index == 6) {
-          emozioneMax = "Sorpreso"
-          sorpreso()
-        }
+    var emozioniGrafico = [0, 1, 0, 0, 0, 0, 0]
 
-        // console.log('Emozione media:', emozioneMax);
-      });
+    var checker = 1
 
-      // // stampo telecamera come canvas
-      // const canvas = document.createElement('canvas');
-      // document.body.appendChild(canvas);
-      //
-      // window.addEventListener(CY.modules().CAMERA.eventName, (evt) => {
-      //   const ctx = canvas.getContext('2d');
-      //   const imageData = evt.detail;
-      //   ctx.canvas.width = imageData.width;
-      //   ctx.canvas.height = imageData.height;
-      //   ctx.putImageData(imageData, 0, 0);
-      // });
+    var asseY = [0]
 
+    var index = 0
 
+    var asseX = [0]
 
+    // Get the root element
+    var r = document.querySelector(':root');
 
+    // parte di stampa dei valori medi
+    window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
+      var emozioni = [
+        evt.detail.emotion_Angry.avg,
+        evt.detail.emotion_Disgust.avg,
+        evt.detail.emotion_Fear.avg,
+        evt.detail.emotion_Happy.avg,
+        evt.detail.emotion_Neutral.avg,
+        evt.detail.emotion_Sad.avg,
+        evt.detail.emotion_Surprise.avg
+      ]
 
-      // Controllo e attivo funzione quando bg color del body cambia
-      // var observer = new MutationObserver(function(mutations) {
-      //   mutations.forEach(function(mutationRecord) {
-      //
-      //     var bgColor = document.getElementById('myId').style.backgroundColor
-      //     console.log('style changed! ' + bgColor);
-      //
-      //     if (bgColor == "green") {
-      //       felice()
-      //     } else if (bgColor == "red") {
-      //       rabbia()
-      //     }
-      //   });
-      // });
+      const max = Math.max.apply(null, emozioni);
 
-      // var target = document.getElementById('myId');
-      // observer.observe(target, {
-      //   attributes: true,
-      //   attributeFilter: ['style']
-      // });
+      index = emozioni.indexOf(max);
 
+      var emozioneMax
 
+      emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
-      // const age_div = document.querySelector("#age");
-      // const gen_div = document.querySelector("#gender");
-      const emo_div = document.querySelector("#emotion");
+      emozioniGrafico[index] = emozioniGrafico[index] + 1;
 
-      // window.addEventListener(CY.modules().FACE_AGE.eventName, (evt) => {
-      //  age_div.innerHTML = 'Age: ' + evt.detail.output.numericAge;
-      //
-      //
-      //
-      // });
-      //
-      // window.addEventListener(CY.modules().FACE_GENDER.eventName, (evt) => {
-      //  gen_div.innerHTML = 'Gender: ' + evt.detail.output.mostConfident;
-      // });
+      console.log(checker)
 
+      checker++;
 
+      asseY.push(checker)
 
+      asseX.push(index)
 
-      // window.addEventListener(CY.modules().FACE_EMOTION.eventName, (evt) => {
-      //   emo_div.innerHTML = 'Emotion: ' + evt.detail.output.dominantEmotion;
-      //
-      //   // for (var i = 0; i < 100; i++) {
-      //   vEmozione = evt.detail.output.dominantEmotion;
-      //
-      //   if (vEmozione == "Happy") {
-      //     $("body").css("background", "green")
-      //   } else if (vEmozione == "Angry") {
-      //     $("body").css("background", "red")
-      //   }
-      //
-      //   // }
-      // });
+      graficoEmo.data.datasets[0].data = asseX;
+      graficoEmo.data.labels = asseY;
+      graficoEmo.update();
 
-
-
-      // // Perform change
-      // $('element').css('background', 'red');
-
-      // function etapiu() {
-      // document.getElementById('vecchiaia').innerHTML = "<b>SEI UN VECCHIO SCEMO</b>";
-      // return;
-      // }
-      // function etameno() {
-      // document.getElementById('vecchiaia').innerHTML = "<b>SEI UN GIOVANE FIKO</b>";
-      // return;
-      // }
-
-      async function felice() {
-        document.getElementById('stato').innerHTML = "<b>FELICE</b>";
-        $("body").css("background", "green")
-
-        if (isConnectted) {
-          await writer.write(enc.encode(`0-255-0@`));
-          return;
-        }
-        return;
+      if (index == 0) {
+        emozioneMax = "Rabbia"
+        rabbia()
+      } else if (index == 1) {
+        emozioneMax = "Disgusto"
+        disgusto()
+      } else if (index == 2) {
+        emozioneMax = "Paura"
+        paura()
+      } else if (index == 3) {
+        emozioneMax = "Felicità"
+        felice()
+      } else if (index == 4) {
+        emozioneMax = "Neutrale"
+        neutrale()
+      } else if (index == 5) {
+        emozioneMax = "Triste"
+        triste()
+      } else if (index == 6) {
+        emozioneMax = "Sorpreso"
+        sorpreso()
       }
 
+    });
 
-      async function rabbia() {
-        document.getElementById('stato').innerHTML = "<b>ARRABBIATO</b>";
-        $("body").css("background", "red")
+    // const age_div = document.querySelector("#age");
+    // const gen_div = document.querySelector("#gender");
+    const emo_div = document.querySelector("#emotion");
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`255-0-0@`));
-          return;
-        }
+    async function felice() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: FELICE</b>";
+      // $("#colore").css("background", "green")
+
+      r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
+      r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-255-0@`));
         return;
       }
+      return;
+    }
 
-      async function triste() {
-        document.getElementById('stato').innerHTML = "<b>TRISTE</b>";
-        $("body").css("background", "blue")
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`0-0-255@`));
-          return;
-        }
+    async function rabbia() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: ARRABBIATO</b>";
+      // $("#colore").css("background", "red")
+
+      r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
+      r.style.setProperty('--color-2', 'rgba(255,0,0,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-0-0@`));
         return;
       }
+      return;
+    }
 
-      async function disgusto() {
-        document.getElementById('stato').innerHTML = "<b>DISGUSTATO</b>";
-        $("body").css("background", "yellow")
+    async function triste() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: TRISTE</b>";
+      // $("#colore").css("background", "blue")
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`255-255-0@`));
-          return;
-        }
+      r.style.setProperty('--color-1', 'rgba(0,0,255,1)');
+      r.style.setProperty('--color-2', 'rgba(0,0,255,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-0-255@`));
         return;
       }
+      return;
+    }
 
-      async function neutrale() {
-        document.getElementById('stato').innerHTML = "<b>NEUTRALE</b>";
-        $("body").css("background", "white")
+    async function disgusto() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: DISGUSTATO</b>";
+      // $("#colore").css("background", "yellow")
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`255-255-255@`));
-          return;
-        }
+      r.style.setProperty('--color-1', 'rgba(255,255,0,1)');
+      r.style.setProperty('--color-2', 'rgba(255,255,0,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-255-0@`));
         return;
       }
+      return;
+    }
 
-      async function paura() {
-        document.getElementById('stato').innerHTML = "<b>IMPAURITO</b>";
-        $("body").css("background", "magenta")
+    async function neutrale() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: NEUTRALE</b>";
+      // $("#colore").css("background", "white")
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`255-0-255@`));
-          return;
-        }
+      r.style.setProperty('--color-1', 'rgba(255,255,255,1)');
+      r.style.setProperty('--color-2', 'rgba(255,255,255,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-255-255@`));
         return;
       }
+      return;
+    }
 
-      async function sorpreso() {
-        document.getElementById('stato').innerHTML = "<b>SORPRESO</b>";
-        $("body").css("background", "cyan")
+    async function paura() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: IMPAURITO</b>";
+      // $("#colore").css("background", "magenta")
 
-        if (isConnectted) {
-          await writer.write(enc.encode(`0-255-255@`));
-          return;
-        }
+      r.style.setProperty('--color-1', 'rgba(255,0,255,1)');
+      r.style.setProperty('--color-2', 'rgba(255,0,255,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`255-0-255@`));
         return;
       }
-    </script>
+      return;
+    }
 
-  </div>
+    async function sorpreso() {
+      document.getElementById('emotion').innerHTML = "<b>Emotion: SORPRESO</b>";
+      // $("#colore").css("background", "cyan")
+
+      r.style.setProperty('--color-1', 'rgba(0,255,255,1)');
+      r.style.setProperty('--color-2', 'rgba(0,255,255,0)');
+
+      if (isConnectted) {
+        await writer.write(enc.encode(`0-255-255@`));
+        return;
+      }
+      return;
+    }
+  </script>
+
 </body>
 
 </html>
