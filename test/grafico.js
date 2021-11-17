@@ -14,15 +14,28 @@ var options = {
   maintainAspectRatio: false,
   scales: {
     y: {
+      max: 6,
+      min: 0,
       grid: {
         display: false
-      }
+      },
+      ticks: {
+        color: "#fff", // this here
+      },
     },
     x: {
       grid: {
         display: false
-      }
+      },
+      ticks: {
+        color: "#fff", // this here
+      },
     }
+  },
+  plugins:{
+    legend: {
+      display: false
+    },
   }
 };
 
@@ -56,7 +69,7 @@ CY.loader()
 
 var emozioniGrafico = [0, 1, 0, 0, 0, 0, 0]
 
-var checker = 1
+var checker = 0
 
 var asseY = [0]
 
