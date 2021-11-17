@@ -15,76 +15,20 @@
 <body id="myId">
   <div class="contenitore">
     
-  <h1 style="color: white;mix-blend-mode: exclusion;">MVP FINAL DESIGN STUDIO</h1>
+  <h1 style="color: white;mix-blend-mode: exclusion;">MVP</h1>
   <input type="color" id="color-picker" />
   <section id="controls">
     <button onclick="onConnectUsb()" id="connect-usb">
       <i class="fa fa-usb" aria-hidden="true"></i>
     </button>
-    <button onclick="onChangeColor()" id="change-color">Change Color</button>
+    <button onclick="onChangeColor()" id="change-color">&#8617</button>
   </section>
 
-
-  <script>
-    let isConnectted = false;
-    let port;
-    let writer;
-    const enc = new TextEncoder();
-
-    async function onChangeColor() {
-      if (!isConnectted) {
-        alert("you must connect to the usb in order to use this.");
-        return;
-      }
-      try {
-        const colorHex = document.getElementById("color-picker").value;
-        const colorRgb = hexToRgb(colorHex);
-        const computerText = `${colorRgb.r}-${colorRgb.g}-${colorRgb.b}@`;
-        await writer.write(enc.encode(computerText));
-      } catch (e) {
-        console.log(e);
-        alert("could not write color");
-      }
-    }
-
-    async function onConnectUsb() {
-      try {
-        const requestOptions = {
-          // Filter on devices with the Arduino USB vendor ID.
-          filters: [{
-            usbVendorId: 0x2341
-          }],
-        };
-
-        // Request an Arduino from the user.
-        port = await navigator.serial.requestPort(requestOptions);
-        await port.open({
-          baudRate: 115200
-        });
-        writer = port.writable.getWriter();
-        isConnectted = true;
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    function hexToRgb(hex) {
-      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16),
-        } :
-        null;
-    }
-  </script>
-
-
+  <script src="arduino.js"></script>
 
   <!-- CAMERA -->
 
   <div style="text-align:center; margin-top: 100px">
-
 
     <div><b>Results:</b></div>
     <!-- <div id="age">Age: -</div> -->
