@@ -17,6 +17,7 @@ body {
   font-size: 60px;
   background: #141414;
   color: #000000;
+  overflow:hidden;
 }
 
 .terminal {
