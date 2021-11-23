@@ -49,9 +49,6 @@ var graficoEmo = new Chart('chart', {
 var veta;
 var vEmozione;
 
-var felicio = false;
-console.log(felicio);
-
 const config = {
   initialWaitMs: 0,
   periodMs: 2500
@@ -204,10 +201,15 @@ async function felice() {
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
   r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
+  
+  var felicio = true;
+  console.log(felicio);
 
-  if(felicio == false){
+  if(felicio){
       new Audio('audio.mp3').play()
-      felicio = true;
+      felicio = false;
+  } else {
+  
   }
   
   if (isConnectted) {
