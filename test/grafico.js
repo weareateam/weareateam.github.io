@@ -50,6 +50,7 @@ var veta;
 var vEmozione;
 
 var felicio = false;
+console.log(felicio);
 
 const config = {
   initialWaitMs: 0,
