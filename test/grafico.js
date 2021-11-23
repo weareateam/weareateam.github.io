@@ -32,7 +32,7 @@ var options = {
       },
     }
   },
-  plugins:{
+  plugins: {
     legend: {
       display: false
     },
@@ -67,7 +67,7 @@ CY.loader()
     stop
   }) => start());
 
-var emozioniGrafico = [0, 1, 0, 0, 0, 0, 0]
+var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
 var checker = 0
 
@@ -77,6 +77,7 @@ var index = 0
 
 var asseX = [0]
 
+var storicoEmozioni = [0]
 // Get the root element
 var r = document.querySelector(':root');
 
@@ -92,17 +93,68 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
     evt.detail.emotion_Happy.avg
   ]
 
+
   const max = Math.max.apply(null, emozioni);
 
   index = emozioni.indexOf(max);
+
+  storicoEmozioni.push(index)
+
+  if (storicoEmozioni.length > 9)
+        storicoEmozioni.shift();
+
+  const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+  // var mediaStorico = average(storicoEmozioni).toFixed(0);
+
+  // trovo il valore che è più presente nell'array dello storico delle emozioni
+  function mode(array) {
+    if (array.length == 0)
+      return null;
+    var modeMap = {};
+    var maxEl = array[0],
+      maxCount = 1;
+    for (var i = 0; i < array.length; i++) {
+      var el = array[i];
+      if (modeMap[el] == null)
+        modeMap[el] = 1;
+      else
+        modeMap[el]++;
+      if (modeMap[el] > maxCount) {
+        maxEl = el;
+        maxCount = modeMap[el];
+      }
+    }
+    return maxEl;
+  }
+
+  var varpiufreq = mode(storicoEmozioni)
+
+  console.log(storicoEmozioni, varpiufreq)
+
+  if (varpiufreq == 0) {
+    document.getElementById("emozioneMedia").innerHTML = "Rabbia"
+  } else if (varpiufreq == 1) {
+    document.getElementById("emozioneMedia").innerHTML = "Disgusto"
+  } else if (varpiufreq == 2) {
+    document.getElementById("emozioneMedia").innerHTML = "Paura"
+  } else if (varpiufreq == 6) {
+    document.getElementById("emozioneMedia").innerHTML = "Felicità"
+  } else if (varpiufreq == 4) {
+    document.getElementById("emozioneMedia").innerHTML = "Neutrale"
+  } else if (varpiufreq == 3) {
+    document.getElementById("emozioneMedia").innerHTML = "Triste"
+  } else if (varpiufreq == 5) {
+    document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
+  }
+
+  //fare check delle ultime 10 misurazioni e vedere qual è il valore preponderante
 
   var emozioneMax
 
   emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
   emozioniGrafico[index] = emozioniGrafico[index] + 1;
-
-  console.log(checker)
 
   checker++;
 
@@ -144,7 +196,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 const emo_div = document.querySelector("#emotion");
 
 async function felice() {
-  document.getElementById('emotion').innerHTML = "FELICE";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: FELICE</b>";
   // $("#colore").css("background", "green")
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
@@ -159,7 +211,7 @@ async function felice() {
 
 
 async function rabbia() {
-  document.getElementById('emotion').innerHTML = "ARRABBIATO";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: ARRABBIATO</b>";
   // $("#colore").css("background", "red")
 
   r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
@@ -173,7 +225,7 @@ async function rabbia() {
 }
 
 async function triste() {
-  document.getElementById('emotion').innerHTML = "TRISTE";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: TRISTE</b>";
   // $("#colore").css("background", "blue")
 
   r.style.setProperty('--color-1', 'rgba(0,0,255,1)');
@@ -187,7 +239,7 @@ async function triste() {
 }
 
 async function disgusto() {
-  document.getElementById('emotion').innerHTML = "DISGUSTATO";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: DISGUSTATO</b>";
   // $("#colore").css("background", "yellow")
 
   r.style.setProperty('--color-1', 'rgba(255,255,0,1)');
@@ -201,7 +253,7 @@ async function disgusto() {
 }
 
 async function neutrale() {
-  document.getElementById('emotion').innerHTML = "NEUTRALE";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: NEUTRALE</b>";
   // $("#colore").css("background", "white")
 
   r.style.setProperty('--color-1', 'rgba(255,255,255,1)');
@@ -215,7 +267,7 @@ async function neutrale() {
 }
 
 async function paura() {
-  document.getElementById('emotion').innerHTML = "IMPAURITO";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: IMPAURITO</b>";
   // $("#colore").css("background", "magenta")
 
   r.style.setProperty('--color-1', 'rgba(255,0,255,1)');
@@ -229,7 +281,7 @@ async function paura() {
 }
 
 async function sorpreso() {
-  document.getElementById('emotion').innerHTML = "SORPRESO";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: SORPRESO</b>";
   // $("#colore").css("background", "cyan")
 
   r.style.setProperty('--color-1', 'rgba(0,255,255,1)');
