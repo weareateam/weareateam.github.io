@@ -203,7 +203,7 @@ async function felice() {
   r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
 
   var felicio = false;
-  if(!felicio){
+  if(felicio == false){
       new Audio('audio.mp3').play()
       felicio = true;
   }
