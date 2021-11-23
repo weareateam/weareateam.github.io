@@ -202,6 +202,8 @@ async function felice() {
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
   r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
 
+  new Audio('audio.mp3').play()
+  
   if (isConnectted) {
     await writer.write(enc.encode(`0-255-0@`));
     return;
