@@ -142,6 +142,14 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
     document.getElementById("emozioneMedia").innerHTML = "Paura"
   } else if (varpiufreq == 6) {
     document.getElementById("emozioneMedia").innerHTML = "Felicità"
+    
+    if(felicio){
+      new Audio('audio.mp3').play()
+      felicio = false;
+    } else {
+
+    }
+    
   } else if (varpiufreq == 4) {
     document.getElementById("emozioneMedia").innerHTML = "Neutrale"
   } else if (varpiufreq == 3) {
@@ -203,13 +211,6 @@ async function felice() {
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
   r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
-
-  if(felicio){
-      new Audio('audio.mp3').play()
-      felicio = false;
-  } else {
-  
-  }
   
   if (isConnectted) {
     await writer.write(enc.encode(`0-255-0@`));
