@@ -1,4 +1,3 @@
-
   let isConnectted = false;
   let port;
   let writer;
@@ -6,7 +5,7 @@
 
   async function onChangeColor() {
     if (!isConnectted) {
-      alert("you must connect to the usb in order to use this.");
+      alert("connettere arduino");
       return;
     }
     try {
@@ -16,23 +15,23 @@
       await writer.write(enc.encode(computerText));
     } catch (e) {
       console.log(e);
-      alert("could not write color");
+      alert("impossibile impostare il colore");
     }
   }
 
   async function onConnectUsb() {
     try {
       const requestOptions = {
-        // Filter on devices with the Arduino USB vendor ID.
+        // filtro schede Arduino
         filters: [{
           usbVendorId: 0x2341
         }],
       };
 
-      // Request an Arduino from the user.
+      // Imposto porta seriale
       port = await navigator.serial.requestPort(requestOptions);
       await port.open({
-        baudRate: 115200
+        baudRate: 115200   // Stesso rate impostato nel codice Arduino
       });
       writer = port.writable.getWriter();
       isConnectted = true;
@@ -41,6 +40,7 @@
     }
   }
 
+  //converto hex in rgb per Arduino
   function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
