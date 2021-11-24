@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- <script src="p5.js"></script>
-    <script src="p5.sound.min.js"></script> -->
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
@@ -12,39 +10,55 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
 </head>
 
-<body id="myId">
+<body id="myId" onload="lightbox_open()" style="overflow: hidden;">
   
-  <div class="contenitore">
+<div class="contenitore">
 
-  <h1 id="emotion" style="color: white;mix-blend-mode: exclusion;"></h1>
-  <input type="color" id="color-picker" />
-  <section id="controls">
-    <button onclick="onConnectUsb()" id="connect-usb">
-      <i class="fa fa-usb" aria-hidden="true"></i>
-    </button>
-    <button onclick="onChangeColor()" id="change-color">&#8617</button>
-  </section>
+  <h3 style=" background-color:#000; color:#FFF; text-align:center; ">Time = <span id="timer"></span></h3>
 
-  <script src="arduino.js"></script>
+  <h2 style="color: white; mix-blend-mode: exclusion; text-align:center;">Emozione Preponderante:</h2>
+  <h1 style="color: white;mix-blend-mode: exclusion;"> <span id="emozioneMedia">Loading</span> </h1>
 
   <!-- CAMERA -->
 
   <div style="text-align:center; margin-top: 50px">
-    <div id="emotion" style="color: white; mix-blend-mode: exclusion">Emotion: </div>
-    <br><br>
   </div>
 
   <div class="chart-container" style="width: 90%;margin-left: 5%;">
     <canvas id="chart" style="height: 300px;"></canvas>
   </div>
 
-  <br><br>
-  emozione preponderante: <span id="emozioneMedia"></span>
+  <h2 id="emotion" style="color: white; mix-blend-mode: exclusion; text-align:center; margin-top: 50px;">Loading</h2>
 
+  <!-- POPUP VIDEO -->
+
+  <div id="light">
+    <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
+    <video id="VisaChipCardVideo" muted="muted" width="900" controls>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        <!--Browser does not support <video> tag -->
+      </video>
+  </div>
+  
+  <div id="fade" onClick="lightbox_close();"></div>
+  
+  <div>
+    <h3 style="color: white; mix-blend-mode: exclusion; text-align:center;">
+      <a href="#" onclick="lightbox_open();" style="text-decoration: none; color: inherit;">Open video</a>
+    </h3>
+  </div>
+
+  <section id="controls">
+    <button onclick="onConnectUsb()" id="connect-usb">
+      <i class="fa fa-usb" aria-hidden="true"></i>
+    </button>
+  </section>
 
 </div>
 
-  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw">
+  <!-- BG EFFECT -->
+
+  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 50vw; left:25%;">
     <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
       <defs>
         <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
@@ -85,6 +99,7 @@
   <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
   <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
 
+  <script src="arduino.js"></script>
   <script src="grafico.js"></script>
 
 </body>
