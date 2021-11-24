@@ -99,6 +99,8 @@ var graficoEmo = new Chart('chart', {
   data: data
 });
 
+var cont = document.getElementById("container")
+
 var veta;
 var vEmozione;
 
