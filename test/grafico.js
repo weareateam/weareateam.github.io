@@ -272,100 +272,137 @@ async function continuaFelice() {
 }
 
 async function felice() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: FELICE</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: FELICE</b>";
   // $("#colore").css("background", "green")
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
   r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`0-255-0@`));
-    return;
-  }
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "felice");
+  cont.appendChild(div);
+
+
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`0-255-0@`));
+  //   return;
+  // }
   return;
 }
 
 
 async function rabbia() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: ARRABBIATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: ARRABBIATO</b>";
   // $("#colore").css("background", "red")
 
   r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
   r.style.setProperty('--color-2', 'rgba(255,0,0,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`255-0-0@`));
-    return;
-  }
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "rabbia");
+  cont.appendChild(div);
+
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`255-0-0@`));
+  //   return;
+  // }
   return;
 }
 
 async function triste() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: TRISTE</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: TRISTE</b>";
   // $("#colore").css("background", "blue")
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "triste");
+  cont.appendChild(div);
+
 
   r.style.setProperty('--color-1', 'rgba(0,0,255,1)');
   r.style.setProperty('--color-2', 'rgba(0,0,255,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`0-0-255@`));
-    return;
-  }
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`0-0-255@`));
+  //   return;
+  // }
   return;
 }
 
 async function disgusto() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: DISGUSTATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: DISGUSTATO</b>";
   // $("#colore").css("background", "yellow")
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "disgusto");
+  cont.appendChild(div);
 
   r.style.setProperty('--color-1', 'rgba(255,255,0,1)');
   r.style.setProperty('--color-2', 'rgba(255,255,0,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`255-255-0@`));
-    return;
-  }
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`255-255-0@`));
+  //   return;
+  // }
   return;
 }
 
 async function neutrale() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: NEUTRALE</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: NEUTRALE</b>";
   // $("#colore").css("background", "white")
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "neutrale");
+  cont.appendChild(div);
 
   r.style.setProperty('--color-1', 'rgba(255,255,255,1)');
   r.style.setProperty('--color-2', 'rgba(255,255,255,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`255-255-255@`));
-    return;
-  }
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`255-255-255@`));
+  //   return;
+  // }
   return;
 }
 
 async function paura() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: IMPAURITO</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: IMPAURITO</b>";
   // $("#colore").css("background", "magenta")
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "paura");
+  cont.appendChild(div);
 
   r.style.setProperty('--color-1', 'rgba(255,0,255,1)');
   r.style.setProperty('--color-2', 'rgba(255,0,255,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`255-0-255@`));
-    return;
-  }
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`255-0-255@`));
+  //   return;
+  // }
   return;
 }
 
 async function sorpreso() {
-  document.getElementById('emotion').innerHTML = "<b>NOW: SORPRESO</b>";
+  document.getElementById('emotion').innerHTML = "<b>Emotion: SORPRESO</b>";
   // $("#colore").css("background", "cyan")
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("id", "sorpreso");
+  cont.appendChild(div);
 
   r.style.setProperty('--color-1', 'rgba(0,255,255,1)');
   r.style.setProperty('--color-2', 'rgba(0,255,255,0)');
 
-  if (isConnectted) {
-    await writer.write(enc.encode(`0-255-255@`));
-    return;
-  }
+  // if (isConnectted) {
+  //   await writer.write(enc.encode(`0-255-255@`));
+  //   return;
+  // }
   return;
 }
