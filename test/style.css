@@ -22,7 +22,6 @@ canvas {
   transition: 0.1s all;
 }
 
-
 body {
 font-family: 'Poppins', sans-serif;
 background-color: #000000;
@@ -50,7 +49,6 @@ section {
   display:block;
   margin: 0 auto;
 }
-
 
 #fade {
   display: none;
