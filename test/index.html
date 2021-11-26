@@ -42,15 +42,15 @@
 
   <!-- EMOZIONI -->
   <div class ="NOW">
-    <h3 id="emotion" style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">loading</h3>
+    <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
   </div>
 
   <!-- MOOD -->
-  <h4 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0; margin-top: 20px;">mood</h4>
-  <h2 style="color: white;mix-blend-mode: exclusion; text-align:center; margin: 0;"> <span id="emozioneMedia">loading</span> </h2>
+  <h4 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0; margin-top: 20px;">now</h4>
+  <h2 id="emotion" style="color: white;mix-blend-mode: exclusion; text-align:center; margin: 0;"> </h2>
 
   <!-- GRAFIC1 -->
-  <div class = "schemi">
+  <div class="schemi">
     <div class ="precise" id="preciso"><h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">loading</h3></div>
     <div id="container"></div>
     <div class="chart-container"><canvas id="chart" style="height: 160px;"></canvas></div>
@@ -102,6 +102,7 @@
 
   <script src="arduino.js"></script>
   <script src="grafico.js"></script>
+  <script src="html2canvas.min.js"></script>
 
 </body>
 
