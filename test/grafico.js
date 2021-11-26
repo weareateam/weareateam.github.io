@@ -14,9 +14,11 @@ function lightbox_close() {
   document.getElementById('fade').style.display = 'none';
   lightBoxVideo.pause();
 
+// TIMER
+
   // start timer
   document.getElementById('timer').innerHTML =
-  01 + ":" + 00;
+  02 + ":" + 00;
   startTimer();
 
   // play music
@@ -24,9 +26,8 @@ function lightbox_close() {
   audioObj = new Audio(linkAudio).play();
 }
 
-// timer
-
 function startTimer() {
+
   var presentTime = document.getElementById('timer').innerHTML;
   var timeArray = presentTime.split(/[:]+/);
   var m = timeArray[0];
@@ -42,7 +43,9 @@ function startTimer() {
 
   // when the timer stops
   if(s==0){
-    console.log('TEMPO SCADUTO');
+    if(m==0){
+      finito();
+    }
   }
 }
 
@@ -50,6 +53,33 @@ function checkSecond(sec) {
   if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
   if (sec < 0) {sec = "59"};
   return sec;
+}
+
+async function finito() {
+  console.log('TEMPO SCADUTO');
+  capture();
+
+  return;
+}
+
+//download grafici
+
+function capture() {
+  const captureElement = document.querySelector('#container')
+  html2canvas(captureElement)
+      .then(canvas => {
+          canvas.style.display = 'none'
+          document.body.appendChild(canvas)
+          return canvas
+      })
+      .then(canvas => {
+          const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+          const a = document.createElement('a')
+          a.setAttribute('download', 'utente.png')
+          a.setAttribute('href', image)
+          a.click()
+          canvas.remove()
+      })
 }
 
 // grafico
@@ -130,7 +160,7 @@ CY.loader()
   // PROVA PROVA PROVA
 
   window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
-    console.log(evt2.detail);
+    //console.log(evt2.detail);
     });
     
     const FACE_AROUSAL_VALENCE_EVENT = {
@@ -295,7 +325,7 @@ async function continuaFelice() {
 }
 
 async function felice() {
-  document.getElementById('emotion').innerHTML = "<b>now FELICE</b>";
+  document.getElementById('emotion').innerHTML = "<b>FELICE</b>";
   // $("#colore").css("background", "green")
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
@@ -316,7 +346,7 @@ async function felice() {
 
 
 async function rabbia() {
-  document.getElementById('emotion').innerHTML = "<b>now ARRABBIATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>ARRABBIATO</b>";
   // $("#colore").css("background", "red")
 
   r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
@@ -335,7 +365,7 @@ async function rabbia() {
 }
 
 async function triste() {
-  document.getElementById('emotion').innerHTML = "<b>now TRISTE</b>";
+  document.getElementById('emotion').innerHTML = "<b>TRISTE</b>";
   // $("#colore").css("background", "blue")
 
   var div = document.createElement("div");
@@ -355,7 +385,7 @@ async function triste() {
 }
 
 async function disgusto() {
-  document.getElementById('emotion').innerHTML = "<b>now DISGUSTATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>DISGUSTATO</b>";
   // $("#colore").css("background", "yellow")
 
   var div = document.createElement("div");
@@ -374,7 +404,7 @@ async function disgusto() {
 }
 
 async function neutrale() {
-  document.getElementById('emotion').innerHTML = "<b>now NEUTRALE</b>";
+  document.getElementById('emotion').innerHTML = "<b>NEUTRALE</b>";
   // $("#colore").css("background", "white")
 
   var div = document.createElement("div");
@@ -393,7 +423,7 @@ async function neutrale() {
 }
 
 async function paura() {
-  document.getElementById('emotion').innerHTML = "<b>now IMPAURITO</b>";
+  document.getElementById('emotion').innerHTML = "<b>IMPAURITO</b>";
   // $("#colore").css("background", "magenta")
 
   var div = document.createElement("div");
@@ -412,7 +442,7 @@ async function paura() {
 }
 
 async function sorpreso() {
-  document.getElementById('emotion').innerHTML = "<b>now SORPRESO</b>";
+  document.getElementById('emotion').innerHTML = "<b>SORPRESO</b>";
   // $("#colore").css("background", "cyan")
 
   var div = document.createElement("div");
