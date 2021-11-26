@@ -58,7 +58,7 @@ var data = {
   datasets: [{
     label: "Andamento emozioni",
     borderColor: "rgba(255,255,255,1)",
-    borderWidth: 3,
+    borderWidth: 1.5,
     data: emozioniGrafico,
     stepped: true,
   }]
@@ -109,6 +109,7 @@ const config = {
   periodMs: 2500
 };
 
+const config2 = {smoothness: 0.70};
 
 CY.loader()
   .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
@@ -116,11 +117,31 @@ CY.loader()
   // .addModule(CY.modules().FACE_GENDER.name)
   .addModule(CY.modules().FACE_EMOTION.name)
   .addModule(CY.modules().DATA_AGGREGATOR.name, config)
+
+  .addModule(CY.modules().FACE_AROUSAL_VALENCE.name, config2)
+  .addModule(CY.modules().FACE_DETECTOR.name, {})
+
   .load()
   .then(({
     start,
     stop
   }) => start());
+
+  // PROVA PROVA PROVA
+
+  window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
+    console.log(evt2.detail);
+    });
+    
+    const FACE_AROUSAL_VALENCE_EVENT = {
+      output: {
+        arousal: Number,
+        valence: Number,
+        affects38 : { "Afraid": Number, "Amused": Number, },
+        quadrant : String
+      }
+    }
+
 
 var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
@@ -274,7 +295,7 @@ async function continuaFelice() {
 }
 
 async function felice() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: FELICE</b>";
+  document.getElementById('emotion').innerHTML = "<b>now FELICE</b>";
   // $("#colore").css("background", "green")
 
   r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
@@ -295,7 +316,7 @@ async function felice() {
 
 
 async function rabbia() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: ARRABBIATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>now ARRABBIATO</b>";
   // $("#colore").css("background", "red")
 
   r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
@@ -314,7 +335,7 @@ async function rabbia() {
 }
 
 async function triste() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: TRISTE</b>";
+  document.getElementById('emotion').innerHTML = "<b>now TRISTE</b>";
   // $("#colore").css("background", "blue")
 
   var div = document.createElement("div");
@@ -334,7 +355,7 @@ async function triste() {
 }
 
 async function disgusto() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: DISGUSTATO</b>";
+  document.getElementById('emotion').innerHTML = "<b>now DISGUSTATO</b>";
   // $("#colore").css("background", "yellow")
 
   var div = document.createElement("div");
@@ -353,7 +374,7 @@ async function disgusto() {
 }
 
 async function neutrale() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: NEUTRALE</b>";
+  document.getElementById('emotion').innerHTML = "<b>now NEUTRALE</b>";
   // $("#colore").css("background", "white")
 
   var div = document.createElement("div");
@@ -372,7 +393,7 @@ async function neutrale() {
 }
 
 async function paura() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: IMPAURITO</b>";
+  document.getElementById('emotion').innerHTML = "<b>now IMPAURITO</b>";
   // $("#colore").css("background", "magenta")
 
   var div = document.createElement("div");
@@ -391,7 +412,7 @@ async function paura() {
 }
 
 async function sorpreso() {
-  document.getElementById('emotion').innerHTML = "<b>Emotion: SORPRESO</b>";
+  document.getElementById('emotion').innerHTML = "<b>now SORPRESO</b>";
   // $("#colore").css("background", "cyan")
 
   var div = document.createElement("div");
