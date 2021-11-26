@@ -18,7 +18,7 @@ function lightbox_close() {
 
   // start timer
   document.getElementById('timer').innerHTML =
-  00 + ":" + 30;
+  01 + ":" + 30;
   startTimer();
 
   // play music
