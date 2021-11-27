@@ -136,7 +136,7 @@ var vEmozione;
 
 const config = {
   initialWaitMs: 0,
-  periodMs: 2500
+  periodMs: 2000
 };
 
 const config2 = {smoothness: 0.70};
@@ -158,20 +158,56 @@ CY.loader()
   }) => start());
 
   // PROVA PROVA PROVA
+var precisa;
+var arousal = 0;
+var valence = 0;
+var arousalM = [];
+var valcenceM = [];
 
-  window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
-    //console.log(evt2.detail);
-    });
-    
-    const FACE_AROUSAL_VALENCE_EVENT = {
-      output: {
-        arousal: Number,
-        valence: Number,
-        affects38 : { "Afraid": Number, "Amused": Number, },
-        quadrant : String
-      }
-    }
+window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
+  precisa = evt2.detail.output.affects38;
+  arousal = evt2.detail.output.arousal;
+  valence = evt2.detail.output.valence;
+  //console.log(arousal, valence);
 
+  const findHighest = obj => {
+      const values = Object.values(obj);
+      const max = Math.max.apply(Math, values);
+      for (key in obj) {
+        if (obj[key] === max) {
+            return {
+              [key]: max
+            };
+        };
+      };
+  };
+
+  var emozionePrecisa = Object.keys(findHighest(precisa))[0];
+  document.getElementById('preciso').innerHTML = emozionePrecisa;
+
+  arousalM.push(arousal);
+  valcenceM.push(valence);
+  return;
+});
+
+setInterval(function(){ 
+
+  var lasommaA = arousalM.reduce((a, b) => a + b, 0); 
+  var lamediaA = (lasommaA / arousalM.length) || 0; 
+
+  var lasommaV = valcenceM.reduce((a, b) => a + b, 0); 
+  var lamediaV = (lasommaV / valcenceM.length) || 0; 
+
+
+  console.log(lamediaA, lamediaV);
+
+  mediaprova = [];
+  
+  return;
+
+}, 2000);
+
+  // EMOZIONI
 
 var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
