@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  
+
 }
 canvas {
   display: block;
@@ -107,18 +107,18 @@ section {
 }
 
 .square{
-  width: 5px;
+  width: 0px;
   height:100px;
   display: inline-block;
 }
 
-#rabbia {background-color: #d32020; height: 46px; margin:27px 0}
-#disgusto {background-color: #653aaa; height: 55px; margin:22.5px 0}
-#paura {background-color: #dd3326; height: 64px; margin:18px 0}
-#triste {background-color: #123167; height: 73px; margin:11.5px 0}
-#neutrale {background-color: #e6e6e6; height: 82px; margin:9px 0}
-#sorpreso {background-color: #edd737; height: 91px; margin:4.5px 0}
-#felice {background-color: #3bd81a; height: 100px; margin:0}
+#rabbia {background-color: #A6121F; height: 46px; margin:27px 0}
+#disgusto {background-color: #F22E2E; height: 55px; margin:22.5px 0}
+#paura {background-color: #F2594B; height: 64px; margin:18px 0}
+#triste {background-color: #71BBD9; height: 73px; margin:11.5px 0}
+#neutrale {background-color: #418FBF; height: 82px; margin:9px 0}
+#sorpreso {background-color: #085CA6; height: 91px; margin:4.5px 0}
+#felice {background-color: #0A3873; height: 100px; margin:0}
 
 #container {
   height: 100px;

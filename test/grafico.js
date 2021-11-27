@@ -14,11 +14,11 @@ function lightbox_close() {
   document.getElementById('fade').style.display = 'none';
   lightBoxVideo.pause();
 
-// TIMER
+  // TIMER
 
   // start timer
   document.getElementById('timer').innerHTML =
-  01 + ":" + 30;
+    01 + ":" + 30;
   startTimer();
 
   // play music
@@ -32,8 +32,10 @@ function startTimer() {
   var timeArray = presentTime.split(/[:]+/);
   var m = timeArray[0];
   var s = checkSecond((timeArray[1] - 1));
-  if(s==59){m=m-1}
-  if(m<0){
+  if (s == 59) {
+    m = m - 1
+  }
+  if (m < 0) {
     return
   }
 
@@ -42,16 +44,20 @@ function startTimer() {
   setTimeout(startTimer, 1000);
 
   // when the timer stops
-  if(s==0){
-    if(m==0){
+  if (s == 0) {
+    if (m == 0) {
       finito();
     }
   }
 }
 
 function checkSecond(sec) {
-  if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
-  if (sec < 0) {sec = "59"};
+  if (sec < 10 && sec >= 0) {
+    sec = "0" + sec
+  }; // add zero in front of numbers < 10
+  if (sec < 0) {
+    sec = "59"
+  };
   return sec;
 }
 
@@ -67,19 +73,19 @@ async function finito() {
 function capture() {
   const captureElement = document.querySelector('#container')
   html2canvas(captureElement)
-      .then(canvas => {
-          canvas.style.display = 'none'
-          document.body.appendChild(canvas)
-          return canvas
-      })
-      .then(canvas => {
-          const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-          const a = document.createElement('a')
-          a.setAttribute('download', 'utente.png')
-          a.setAttribute('href', image)
-          a.click()
-          canvas.remove()
-      })
+    .then(canvas => {
+      canvas.style.display = 'none'
+      document.body.appendChild(canvas)
+      return canvas
+    })
+    .then(canvas => {
+      const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+      const a = document.createElement('a')
+      a.setAttribute('download', 'utente.png')
+      a.setAttribute('href', image)
+      a.click()
+      canvas.remove()
+    })
 }
 
 // grafico
@@ -139,7 +145,9 @@ const config = {
   periodMs: 2000
 };
 
-const config2 = {smoothness: 0.70};
+const config2 = {
+  smoothness: 0.70
+};
 
 CY.loader()
   .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
@@ -157,7 +165,7 @@ CY.loader()
     stop
   }) => start());
 
-  // PROVA PROVA PROVA
+// PROVA PROVA PROVA
 var precisa;
 var arousal = 0;
 var valence = 0;
@@ -171,15 +179,15 @@ window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
   //console.log(arousal, valence);
 
   const findHighest = obj => {
-      const values = Object.values(obj);
-      const max = Math.max.apply(Math, values);
-      for (key in obj) {
-        if (obj[key] === max) {
-            return {
-              [key]: max
-            };
+    const values = Object.values(obj);
+    const max = Math.max.apply(Math, values);
+    for (key in obj) {
+      if (obj[key] === max) {
+        return {
+          [key]: max
         };
       };
+    };
   };
 
   var emozionePrecisa = Object.keys(findHighest(precisa))[0];
@@ -190,24 +198,24 @@ window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
   return;
 });
 
-setInterval(function(){ 
+setInterval(function() {
 
-  var lasommaA = arousalM.reduce((a, b) => a + b, 0); 
-  var lamediaA = (lasommaA / arousalM.length) || 0; 
+  var lasommaA = arousalM.reduce((a, b) => a + b, 0);
+  var lamediaA = (lasommaA / arousalM.length) || 0;
 
-  var lasommaV = valcenceM.reduce((a, b) => a + b, 0); 
-  var lamediaV = (lasommaV / valcenceM.length) || 0; 
+  var lasommaV = valcenceM.reduce((a, b) => a + b, 0);
+  var lamediaV = (lasommaV / valcenceM.length) || 0;
 
 
   console.log(lamediaA, lamediaV);
 
   mediaprova = [];
-  
+
   return;
 
 }, 2000);
 
-  // EMOZIONI
+// EMOZIONI
 
 var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 
@@ -222,6 +230,9 @@ var asseX = [0]
 var storicoEmozioni = [0]
 // Get the root element
 var r = document.querySelector(':root');
+
+var testVariable
+var oldVar
 
 // parte di stampa dei valori medi
 window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
@@ -242,7 +253,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
   storicoEmozioni.push(index)
 
   if (storicoEmozioni.length > 9)
-        storicoEmozioni.shift();
+    storicoEmozioni.shift();
 
   const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 
@@ -273,31 +284,45 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
   console.log(storicoEmozioni, varpiufreq)
 
-  if (varpiufreq == 0) {
-    document.getElementById("emozioneMedia").innerHTML = "Rabbia";
-    adjArrabbiato();
-    // if (videoisfinito) {adjArrabbiato();} //--> APPENA IL VIDEO FINISCE MI PARTE LA VARIABILE CHE SCATENA VARPIUFREQ
+  var larghezzaContainer = window.innerWidth * 0.4;
 
-  } else if (varpiufreq == 1) {
-    document.getElementById("emozioneMedia").innerHTML = "Disgusto"
-  } else if (varpiufreq == 2) {
-    document.getElementById("emozioneMedia").innerHTML = "Paura"
-  } else if (varpiufreq == 6) {
-    document.getElementById("emozioneMedia").innerHTML = "Felicità"
-    linkAudio = 'audio.mp3';
-    continuaFelice()
-    //audioObj = new Audio(linkAudio).play();
+  $(".square").css("width", larghezzaContainer / checker + "px")
 
-  } else if (varpiufreq == 4) {
-    document.getElementById("emozioneMedia").innerHTML = "Neutrale"
-    linkAudio = 'triste.m4a';
-    //audioObj = new Audio(linkAudio).play();
+  var tropponeutrale
 
-  } else if (varpiufreq == 3) {
-    document.getElementById("emozioneMedia").innerHTML = "Triste"
-  } else if (varpiufreq == 5) {
-    document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
+  testVariable = varpiufreq
+
+  if (oldVar != testVariable) { //in questo modo non si sovraccarica arduino
+
+    if (varpiufreq == 0) {
+      document.getElementById("emozioneMedia").innerHTML = "Rabbia";
+      adjArrabbiato();
+      // if (videoisfinito) {adjArrabbiato();} //--> APPENA IL VIDEO FINISCE MI PARTE LA VARIABILE CHE SCATENA VARPIUFREQ
+
+    } else if (varpiufreq == 1) {
+      document.getElementById("emozioneMedia").innerHTML = "Disgusto"
+    } else if (varpiufreq == 2) {
+      document.getElementById("emozioneMedia").innerHTML = "Paura"
+    } else if (varpiufreq == 6) {
+      document.getElementById("emozioneMedia").innerHTML = "Felicità"
+      linkAudio = 'audio.mp3';
+      // continuaFelice()
+      //audioObj = new Audio(linkAudio).play();
+    } else if (varpiufreq == 4) {
+      document.getElementById("emozioneMedia").innerHTML = "Neutrale"
+      linkAudio = 'triste.m4a';
+      //audioObj = new Audio(linkAudio).play();
+    } else if (varpiufreq == 3) {
+      document.getElementById("emozioneMedia").innerHTML = "Triste"
+    } else if (varpiufreq == 5) {
+      document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
+    }
+
+  } else {
+    console.log("no change color")
   }
+
+  oldVar = testVariable;
 
   //fare check delle ultime 10 misurazioni e vedere qual è il valore preponderante
 
@@ -353,12 +378,37 @@ async function adjArrabbiato() {
   }
 }
 
-async function continuaFelice() {
+async function adjDisgusto() {
   if (isConnectted) {
-    await writer.write(enc.encode(`255-0-255@`)); //warm color
+    await writer.write(enc.encode(`75-35-230@`)); //blue
     return;
   }
 }
+
+async function adjPaura() {
+  if (isConnectted) {
+    await writer.write(enc.encode(`255-0-255@`)); //purple
+    return;
+  }
+}
+
+async function stimolaNeutrale() {
+  if (isConnectted) {
+    await writer.write(enc.encode(`225-105-20@`)); //orange
+    return;
+  }
+}
+
+async function adjtriste() {
+  if (isConnectted) {
+    await writer.write(enc.encode(`120-225-0@`)); //warm grenn
+    return;
+  }
+}
+
+
+
+
 
 async function felice() {
   document.getElementById('emotion').innerHTML = "<b>FELICE</b>";
