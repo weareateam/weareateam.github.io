@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-  <title>
-    DIO MONA
-  </title>
   <script src="html2canvas.min.js"></script>
+  <title>
+    Movel | MVP
+  </title>
 </head>
 
 <body id="myId" onload="lightbox_open()" style="overflow: hidden;">
@@ -26,7 +26,6 @@
 
   <script>/*<![CDATA[*/
     document.querySelector('video').addEventListener('ended',function(){
-      console.log('Video has ended!');
       lightbox_close();
     }, false);
   /*]]>*/</script>
@@ -63,7 +62,11 @@
 
   <!-- GRAFIC1 -->
   <div class="schemi">
-    <div class ="precise"><h3 id="preciso" style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">loading</h3></div>
+    <div class ="precise">
+      <h3 id="preciso" style="color: white; text-align:left; margin: 0; display:inline-block; width: 175px;">loading</h3>
+      <h3 id="ar" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
+      <h3 id="va" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
+    </div>
     <div id="container"></div>
     <div class="chart-container"><canvas id="chart" style="height: 160px;"></canvas></div>
   </div>

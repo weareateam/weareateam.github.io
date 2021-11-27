@@ -206,10 +206,11 @@ setInterval(function() {
   var lasommaV = valcenceM.reduce((a, b) => a + b, 0);
   var lamediaV = (lasommaV / valcenceM.length) || 0;
 
+  document.getElementById('ar').innerHTML = Math.round((lamediaA + Number.EPSILON) * 100) / 100;
+  document.getElementById('va').innerHTML = Math.round((lamediaV + Number.EPSILON) * 100) / 100;
 
-  console.log(lamediaA, lamediaV);
-
-  mediaprova = [];
+  arousalM = [];
+  valcenceM = [];
 
   return;
 
