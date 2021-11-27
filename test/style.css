@@ -110,15 +110,16 @@ section {
   width: 0px;
   height:100px;
   display: inline-block;
+  vertical-align: middle;
 }
 
-#rabbia {background-color: #A6121F; height: 46px; margin:27px 0}
-#disgusto {background-color: #F22E2E; height: 55px; margin:22.5px 0}
-#paura {background-color: #F2594B; height: 64px; margin:18px 0}
-#triste {background-color: #71BBD9; height: 73px; margin:11.5px 0}
-#neutrale {background-color: #418FBF; height: 82px; margin:9px 0}
-#sorpreso {background-color: #085CA6; height: 91px; margin:4.5px 0}
-#felice {background-color: #0A3873; height: 100px; margin:0}
+#rabbia {background-color: #A6121F;}
+#disgusto {background-color: #F22E2E;}
+#paura {background-color: #F2594B;}
+#triste {background-color: #71BBD9;}
+#neutrale {background-color: #418FBF;}
+#sorpreso {background-color: #085CA6;}
+#felice {background-color: #0A3873;}
 
 #container {
   height: 100px;

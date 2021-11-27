@@ -1,3 +1,5 @@
+var linkAudio = 'base.m4a';
+
 // video
 
 function lightbox_open() {
@@ -18,11 +20,10 @@ function lightbox_close() {
 
   // start timer
   document.getElementById('timer').innerHTML =
-    02 + ":" + 00;
+    04 + ":" + 00;
   startTimer();
 
   // play music
-  var linkAudio = 'base.m4a';
   audioObj = new Audio(linkAudio).play();
 }
 
@@ -165,18 +166,19 @@ CY.loader()
     stop
   }) => start());
 
-// PROVA PROVA PROVA
+// EMOZIONI PRECISE, AROUSAL E VALENCE
 var precisa;
 var arousal = 0;
 var valence = 0;
 var arousalM = [];
 var valcenceM = [];
+var lamediaA;
+var lamediaV;
 
 window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
   precisa = evt2.detail.output.affects38;
   arousal = evt2.detail.output.arousal;
   valence = evt2.detail.output.valence;
-  //console.log(arousal, valence);
 
   const findHighest = obj => {
     const values = Object.values(obj);
@@ -201,10 +203,10 @@ window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
 setInterval(function() {
 
   var lasommaA = arousalM.reduce((a, b) => a + b, 0);
-  var lamediaA = (lasommaA / arousalM.length) || 0;
+  lamediaA = (lasommaA / arousalM.length) || 0;
 
   var lasommaV = valcenceM.reduce((a, b) => a + b, 0);
-  var lamediaV = (lasommaV / valcenceM.length) || 0;
+  lamediaV = (lasommaV / valcenceM.length) || 0;
 
   document.getElementById('ar').innerHTML = Math.round((lamediaA + Number.EPSILON) * 100) / 100;
   document.getElementById('va').innerHTML = Math.round((lamediaV + Number.EPSILON) * 100) / 100;
@@ -306,12 +308,15 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
       document.getElementById("emozioneMedia").innerHTML = "Paura"
     } else if (varpiufreq == 6) {
       document.getElementById("emozioneMedia").innerHTML = "Felicità"
+
+      audioObj= new Audio(linkAudio).pause();
       linkAudio = 'audio.mp3';
-      // continuaFelice()
-      //audioObj = new Audio(linkAudio).play();
+      audioObj = new Audio(linkAudio).play();
+      console.log("dio merda");
+
     } else if (varpiufreq == 4) {
       document.getElementById("emozioneMedia").innerHTML = "Neutrale"
-      linkAudio = 'triste.m4a';
+      //linkAudio = 'triste.m4a';
       //audioObj = new Audio(linkAudio).play();
     } else if (varpiufreq == 3) {
       document.getElementById("emozioneMedia").innerHTML = "Triste"
@@ -408,9 +413,6 @@ async function adjtriste() {
 }
 
 
-
-
-
 async function felice() {
   document.getElementById('emotion').innerHTML = "<b>FELICE</b>";
   // $("#colore").css("background", "green")
@@ -420,9 +422,9 @@ async function felice() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "felice");
   cont.appendChild(div);
-
 
   // if (isConnectted) {
   //   await writer.write(enc.encode(`0-255-0@`));
@@ -441,6 +443,7 @@ async function rabbia() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "rabbia");
   cont.appendChild(div);
 
@@ -457,6 +460,7 @@ async function triste() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "triste");
   cont.appendChild(div);
 
@@ -477,6 +481,7 @@ async function disgusto() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "disgusto");
   cont.appendChild(div);
 
@@ -496,6 +501,7 @@ async function neutrale() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "neutrale");
   cont.appendChild(div);
 
@@ -515,6 +521,7 @@ async function paura() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "paura");
   cont.appendChild(div);
 
@@ -534,6 +541,7 @@ async function sorpreso() {
 
   var div = document.createElement("div");
   div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "sorpreso");
   cont.appendChild(div);
 
