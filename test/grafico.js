@@ -1,4 +1,5 @@
-var linkAudio = 'base.m4a';
+
+audioObj = new Audio("base.m4a");
 
 // video
 
@@ -24,7 +25,8 @@ function lightbox_close() {
   startTimer();
 
   // play music
-  audioObj = new Audio(linkAudio).play();
+  audioObj.play();
+  
 }
 
 function startTimer() {
@@ -308,12 +310,9 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
       document.getElementById("emozioneMedia").innerHTML = "Paura"
     } else if (varpiufreq == 6) {
       document.getElementById("emozioneMedia").innerHTML = "Felicità"
-
-      audioObj= new Audio(linkAudio).pause();
-      linkAudio = 'audio.mp3';
-      audioObj = new Audio(linkAudio).play();
-      console.log("dio merda");
-
+      audioObj.pause();
+      audioObj = new Audio("audio.mp3").play();
+      
     } else if (varpiufreq == 4) {
       document.getElementById("emozioneMedia").innerHTML = "Neutrale"
       //linkAudio = 'triste.m4a';
