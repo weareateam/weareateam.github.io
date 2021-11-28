@@ -9,9 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
   <script src="html2canvas.min.js"></script>
-  <title>
-    Movel | MVP
-  </title>
+  <title>Movel | MVP</title>
 </head>
 
 <body id="myId" onload="lightbox_open()" style="overflow: hidden;">
@@ -41,11 +39,14 @@
 
   <!-- CONTROLLI -->
   <section id="controls">
-    <h4 style="color: white; mix-blend-mode: exclusion; text-align:right; display: inline-block; margin: 0; margin-right: 20px;">
-      <a href="#" onclick="lightbox_open();" style="text-decoration: none; color: inherit;">open video</a>
-    </h4>
-    <button onclick="onConnectUsb()" id="connect-usb">
+    <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 15px;">
       <i class="fa fa-usb" aria-hidden="true"></i>
+    </button>
+    <button onclick="nasconditutto()" style="margin-right: 15px;">
+      <i class="fa fa-eye" aria-hidden="true"></i>
+    </button>
+    <button onclick="lightbox_open()" style="margin-right: 15px;">
+      <i class="fa fa-play-circle" aria-hidden="true"></i>
     </button>
   </section>
 
@@ -57,25 +58,26 @@
     <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
   </div>
 
-  <!-- MOOD -->
-  <h4 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0; margin-top: 20px;">now</h4>
-  <h2 id="emotion" style="color: white;mix-blend-mode: exclusion; text-align:center; margin: 0;"> </h2>
-
   <!-- ALERT NO FACCIA -->
-  <h2 id="noFace" style="position: absolute; left: 50vw; top: 50vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
+  <h2 id="noFace" style="position: absolute; left: 50vw; top: 35vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
 
-  <!-- GRAFIC1 -->
-  <div class="schemi">
+  <!-- GRAFICI -->
+  <div class="schemi" id="schemi" style="z-index: 3;">
     <div class ="precise">
       <h3 id="preciso" style="color: white; text-align:left; margin: 0; display:inline-block; width: 175px;">loading</h3>
       <h3 id="ar" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
       <h3 id="va" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
+      <h3 style="color: white; text-align:left; margin: 0; display:inline-block; width: 225px;">now <span id="emotion"></span></h3>
     </div>
     <div id="container"></div>
     <div class="chart-container"><canvas id="chart" style="height: 160px;"></canvas></div>
   </div>
 
 </div>
+
+  <!-- INTRATTENIMENTO -->
+<iframe src="http://www.koalastothemax.com/" style="width: 90%; height: 80%; display: block; position: absolute; left: 5%; top: 13%; border:none;">
+</iframe>
 
 <!-- BG EFFECT -->
   <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw; left:0%;">

@@ -1,5 +1,18 @@
 audioObj = new Audio("base.m4a");
 
+// nascondi tutto
+var n = 0;
+
+function nasconditutto() {
+  if(n==0){
+    document.getElementById('schemi').style.display = 'block';
+    n = 1;
+  } else {
+    document.getElementById('schemi').style.display = 'none';
+    n = 0;
+  }
+}
+
 // video
 
 function lightbox_open() {
@@ -13,6 +26,7 @@ function lightbox_open() {
 
 function lightbox_close() {
   var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+  document.getElementById('schemi').style.display = 'none';
   document.getElementById('light').style.display = 'none';
   document.getElementById('fade').style.display = 'none';
   lightBoxVideo.pause();
@@ -21,7 +35,7 @@ function lightbox_close() {
 
   // start timer
   document.getElementById('timer').innerHTML =
-    04 + ":" + 00;
+    05 + ":" + 00;
   startTimer();
 
   // play music
@@ -65,6 +79,7 @@ function checkSecond(sec) {
 }
 
 async function finito() {
+  document.getElementById('schemi').style.display = 'block';
   console.log('TEMPO SCADUTO');
   capture();
 
