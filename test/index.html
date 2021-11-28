@@ -29,10 +29,11 @@
       lightbox_close();
     }, false);
   /*]]>*/</script>
-  
+
 </div>
 
 <div id="fade" onClick="lightbox_close();"></div>
+
 
 
 <!-- BODY -->
@@ -59,6 +60,9 @@
   <!-- MOOD -->
   <h4 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0; margin-top: 20px;">now</h4>
   <h2 id="emotion" style="color: white;mix-blend-mode: exclusion; text-align:center; margin: 0;"> </h2>
+
+  <!-- ALERT NO FACCIA -->
+  <h2 id="noFace" style="position: absolute; left: 50vw; top: 50vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
 
   <!-- GRAFIC1 -->
   <div class="schemi">
@@ -117,6 +121,12 @@
 
   <script src="arduino.js"></script>
   <script src="grafico.js"></script>
+
+  <script>
+
+    window.onload = runSerial
+
+  </script>
 
 </body>
 
