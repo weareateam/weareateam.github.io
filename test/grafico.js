@@ -13,24 +13,98 @@ function apertura() {
   document.getElementById('opening').style.display = 'block';
 }
 
+// VIDEO INIZIALE
 var usName;
-// initial video
-function lightbox_open() {
+
+function lightbox_first() {
   usName = document.getElementById("userName").value;
   initMorphcast.then(({start}) => start());
 
   if(usName.length !== 0){
     console.log(usName);
-    var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+    var lightBoxVideo = document.getElementById("startingVideo");
     window.scrollTo(0, 0);
-    document.getElementById('light').style.display = 'block';
-    document.getElementById('fade').style.display = 'block';
-  
+
+    var nowIsTime = "CRY";
+    var Scelta;
+    getRandomInt();
+
+    function getRandomInt(min, max) {
+      var min = 1;
+      var max = 3;
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Scelta = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    if(Scelta == 1){
+      nowIsTime = "cry";
+      var video = document.getElementById('startingVideo');
+      var source = document.createElement('source');
+      source.setAttribute('src', 'media/randomvideo/Sad.mp4');
+      source.setAttribute('type', 'video/mp4');
+
+      video.appendChild(source);
+      video.play();
+      video.controls = false;
+
+    } else if(Scelta == 2){
+      nowIsTime = "smile";
+      var video = document.getElementById('startingVideo');
+      var source = document.createElement('source');
+      source.setAttribute('src', 'media/randomvideo/Happy.mp4');
+      source.setAttribute('type', 'video/mp4');
+
+      video.appendChild(source);
+      video.play();
+      video.controls = false;
+
+    } else if(Scelta == 3){
+      nowIsTime = "upset";
+      var video = document.getElementById('startingVideo');
+      var source = document.createElement('source');
+      source.setAttribute('src', 'media/randomvideo/Disgust.mp4');
+      source.setAttribute('type', 'video/mp4');
+
+      video.appendChild(source);
+      video.play();
+      video.controls = false;
+    }
+
+    document.getElementById("isTimeTo").innerHTML = "Now we will make you " + nowIsTime;
+
     document.getElementById('opening').style.display = 'none';
+    document.getElementById('fadeInit').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('lightInit').style.display = 'block';
+    }, 4000);
     lightBoxVideo.play();
+
+    return;
+
   } else {
     alert('Insert a name please');
   }
+}
+
+function lightbox_firstClose() {
+  var lightBoxVideo = document.getElementById("startingVideo");
+  document.getElementById('lightInit').style.display = 'none';
+  document.getElementById('fadeInit').style.display = 'none';
+  lightBoxVideo.pause();
+  lightbox_open();
+}
+
+// VIDEO INTRO MOVEL
+function lightbox_open() {
+  var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+  window.scrollTo(0, 0);
+  document.getElementById('light').style.display = 'block';
+  document.getElementById('fade').style.display = 'block';
+
+  document.getElementById('opening').style.display = 'none';
+  lightBoxVideo.play();
+  lightBoxVideo.controls = false;
 }
 
 function lightbox_close() {
@@ -48,7 +122,6 @@ function lightbox_close() {
 
   // play music
   audioObj.play();
-
 }
 
 function startTimer() {
@@ -134,7 +207,7 @@ var graficoEmo = new Chart('chart', {
 
 // I FRAME
 
-var linkFrame = "figo";
+var linkFrame = "https://pointerpointer.com/";
 var ifrm;
 
 function prepareFrame() {
@@ -299,7 +372,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'http://eelslap.com/'
+          linkFrame = 'https://pointerpointer.com/'
           frameSettings();
 
           var div = document.createElement("div");
@@ -324,7 +397,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'http://www.muchbetterthanthis.com/'
+          linkFrame = 'http://eelslap.com/'
           frameSettings();
 
           var div = document.createElement("div");
@@ -696,7 +769,7 @@ setInterval(function() {
   valcenceM = [];
 
   rain = Math.random()* 255;
-  console.log(rain);
+  //console.log(rain);
   return;
 
 }, 2000);
