@@ -9,7 +9,7 @@ canvas {
 
 :root {
   --color-1: rgb(255, 255, 255);
-  --color-2: rgba(255, 0, 255, 0);
+  --color-2: rgba(0, 0, 0, 0);
 }
 
 .prova1 {
@@ -134,6 +134,13 @@ section {
   vertical-align: middle;
 }
 
+.squarePlus{
+  width: 0px;
+  height:15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 #rabbia {background-color: #A6121F;}
 #disgusto {background-color: #f2d52e;}
 #paura {background-color: #df72e8;}
@@ -141,6 +148,20 @@ section {
 #neutrale {background-color: #c4c4c4;}
 #sorpreso {background-color: #2acbd6;}
 #felice {background-color: #10812d;}
+#loadingcolor {background-color: #000000;}
+
+#containerPlus {
+  height: 10px;
+  width: 40%;
+  background: #b6b6b6;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  margin-left: 5%;
+  float: left;
+  padding: 0;
+  margin-bottom: 40px;
+}
 
 #container {
   height: 100px;
@@ -152,7 +173,7 @@ section {
   margin-left: 5%;
   float: left;
   padding: 0;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .chart-container {

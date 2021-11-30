@@ -132,9 +132,11 @@ var graficoEmo = new Chart('chart', {
   data: data
 });
 
-var cont = document.getElementById("container")
 
 /////////////////////////////////////////////////////// GESTIONE EMOZIONI /////////////////////////////////////////////////////// 
+
+var cont = document.getElementById("container")
+var contPlus = document.getElementById("containerPlus")
 
 var veta;
 var vEmozione;
@@ -164,6 +166,7 @@ var initMorphcast = new Promise((res) => {
 
 var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
 var checker = 0
+var ragazzi = 1
 var asseY = [0]
 var index = 0
 var asseX = [0]
@@ -248,6 +251,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
     $(".square").css("width", larghezzaContainer / checker + "px")
 
+    $(".squarePlus").css("width", larghezzaContainer / ragazzi + "px")
+
 // EMOZIONI MEDIE
 
     if (storicoEmozioni.length >= 9) {
@@ -257,9 +262,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
       if (oldVar != testVariable) { //in questo modo non si sovraccarica arduino
 
         if (varpiufreq == 0) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Rabbia";
-          r.style.setProperty('--color-1', '#A6121F');
-          r.style.setProperty('--color-2', '#a6121e00');
+          r.style.setProperty('--color-1', '#FFF2CE');
+          r.style.setProperty('--color-2', '#FFF2CE00');
           audioObj.pause();
           audio0.play();
           audio1.pause();
@@ -269,12 +277,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "rabbia");
+          contPlus.appendChild(div);
+
           adjArrabbiato();
 
         } else if (varpiufreq == 1) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Disgusto"
-          r.style.setProperty('--color-1', '#f2d52e');
-          r.style.setProperty('--color-2', '#f2d52e00');
+          r.style.setProperty('--color-1', '#4C86C1');
+          r.style.setProperty('--color-2', '#4C86C100');
           audioObj.pause();
           audio0.pause();
           audio1.play();
@@ -284,12 +300,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "disgusto");
+          contPlus.appendChild(div);
+
           adjDisgusto();
 
         } else if (varpiufreq == 2) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Paura"
-          r.style.setProperty('--color-1', '#df72e8');
-          r.style.setProperty('--color-2', '#de72e800');
+          r.style.setProperty('--color-1', '#C990EC');
+          r.style.setProperty('--color-2', '#C990EC00');
           audioObj.pause();
           audio0.pause();
           audio1.pause();
@@ -299,12 +323,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "paura");
+          contPlus.appendChild(div);
+
           adjPaura();
 
         } else if (varpiufreq == 3) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Triste"
-          r.style.setProperty('--color-1', '#163792');
-          r.style.setProperty('--color-2', '#16379200');
+          r.style.setProperty('--color-1', '#8CC444');
+          r.style.setProperty('--color-2', '#8CC44400');
           audioObj.pause();
           audio0.pause();
           audio1.pause();
@@ -314,12 +346,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "triste");
+          contPlus.appendChild(div);
+
           adjTriste();
 
         } else if (varpiufreq == 4) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Neutrale"
-          r.style.setProperty('--color-1', '#c4c4c4');
-          r.style.setProperty('--color-2', '#c4c4c400');
+          r.style.setProperty('--color-1', '#FFA941');
+          r.style.setProperty('--color-2', '#FFA94100');
           audioObj.pause();
           audio0.pause();
           audio1.pause();
@@ -329,12 +369,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "neutrale");
+          contPlus.appendChild(div);
+
           setTimeout(function() {
             console.log("neutrale per troppo tempo")
             stimolaNeutrale();
           }, 20000);
 
         } else if (varpiufreq == 5) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
           r.style.setProperty('--color-1', '#2acbd6');
           r.style.setProperty('--color-2', '#2acad600');
@@ -347,10 +395,18 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.play();
           audio6.pause();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "sorpreso");
+          contPlus.appendChild(div);
+
         } else if (varpiufreq == 6) {
+          ragazzi = ragazzi + 1;
+          console.log("i ragazzi sono ",ragazzi);
+
           document.getElementById("emozioneMedia").innerHTML = "Felicità"
-          r.style.setProperty('--color-1', '#10812d');
-          r.style.setProperty('--color-2', '#10812c00');
+          r.style.setProperty('--color-1', colorRainbow);
+          r.style.setProperty('--color-2', colorRainbowtra);
           audioObj.pause();
           audio0.pause();
           audio1.pause();
@@ -360,10 +416,19 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio5.pause();
           audio6.play();
 
+          var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "felice");
+          contPlus.appendChild(div);
+
           continuaFelice();
         }
       } else {
         // console.log("no change color")
+        var div = document.createElement("div");
+          div.setAttribute("class", "squarePlus");
+          div.setAttribute("id", "loadingcolor");
+          contPlus.appendChild(div);
       }
 
       oldVar = testVariable;
@@ -547,6 +612,11 @@ var valcenceM = [];
 var lamediaA;
 var lamediaV;
 
+var rain = 0.00;
+var CR = rain.toFixed(0);
+colorRainbow = 'rgb(255,' + CR + ', 0)'
+colorRainbowtra = 'rgb(255,' + CR + ', 0, 0.0)'
+
 window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
   precisa = evt2.detail.output.affects38;
   arousal = evt2.detail.output.arousal;
@@ -586,6 +656,8 @@ setInterval(function() {
   arousalM = [];
   valcenceM = [];
 
+  rain = Math.random()* 255;
+  console.log(rain);
   return;
 
 }, 2000);
