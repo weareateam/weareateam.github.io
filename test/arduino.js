@@ -35,7 +35,7 @@ async function onConnectUsb() {
 }
 
 async function runSerial() {
-  lightbox_open();
+  //lightbox_open();
   try {
 
       port = await navigator.serial.getPorts();

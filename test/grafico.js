@@ -1,27 +1,36 @@
-audioObj = new Audio("base.m4a");
+/////////////////////////////////////////////////////// INIZIO ESPERIENZA /////////////////////////////////////////////////////// 
 
-// nascondi tutto
-var n = 0;
+audioObj = new Audio("media/base.m4a");
+audio0 = new Audio("media/triste.m4a");
+audio1 = new Audio("media/audio.mp3");
+audio2 = new Audio("media/noFear.m4a");
+audio3 = new Audio("media/noTriste.m4a");
+audio4 = new Audio("media/noNeutral.m4a");
+audio5 = new Audio("media/piuSorpreso.m4a");
+audio6 = new Audio("media/piuHappy.m4a");
 
-function nasconditutto() {
-  if(n==0){
-    document.getElementById('schemi').style.display = 'block';
-    n = 1;
-  } else {
-    document.getElementById('schemi').style.display = 'none';
-    n = 0;
-  }
+function apertura() {
+  document.getElementById('opening').style.display = 'block';
 }
 
-// video
-
+var usName;
+// initial video
 function lightbox_open() {
-  var lightBoxVideo = document.getElementById("VisaChipCardVideo");
-  window.scrollTo(0, 0);
-  document.getElementById('light').style.display = 'block';
-  document.getElementById('fade').style.display = 'block';
-  lightBoxVideo.play();
+  usName = document.getElementById("userName").value;
+  initMorphcast.then(({start}) => start());
 
+  if(usName.length !== 0){
+    console.log(usName);
+    var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+    window.scrollTo(0, 0);
+    document.getElementById('light').style.display = 'block';
+    document.getElementById('fade').style.display = 'block';
+  
+    document.getElementById('opening').style.display = 'none';
+    lightBoxVideo.play();
+  } else {
+    alert('Insert a name please');
+  }
 }
 
 function lightbox_close() {
@@ -30,12 +39,11 @@ function lightbox_close() {
   document.getElementById('light').style.display = 'none';
   document.getElementById('fade').style.display = 'none';
   lightBoxVideo.pause();
+  prepareFrame();
 
-  // TIMER
-
-  // start timer
+  // set timer
   document.getElementById('timer').innerHTML =
-    05 + ":" + 00;
+    30 + ":" + 00;
   startTimer();
 
   // play music
@@ -44,7 +52,6 @@ function lightbox_close() {
 }
 
 function startTimer() {
-
   var presentTime = document.getElementById('timer').innerHTML;
   var timeArray = presentTime.split(/[:]+/);
   var m = timeArray[0];
@@ -76,36 +83,6 @@ function checkSecond(sec) {
     sec = "59"
   };
   return sec;
-}
-
-async function finito() {
-  document.getElementById('schemi').style.display = 'block';
-  console.log('TEMPO SCADUTO');
-  capture();
-
-  initMorphcast.then(({stop}) => stop());
-
-  return;
-}
-
-//download grafici
-
-function capture() {
-  const captureElement = document.querySelector('#container')
-  html2canvas(captureElement)
-    .then(canvas => {
-      canvas.style.display = 'none'
-      document.body.appendChild(canvas)
-      return canvas
-    })
-    .then(canvas => {
-      const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-      const a = document.createElement('a')
-      a.setAttribute('download', 'utente.png')
-      a.setAttribute('href', image)
-      a.click()
-      canvas.remove()
-    })
 }
 
 // grafico
@@ -157,6 +134,8 @@ var graficoEmo = new Chart('chart', {
 
 var cont = document.getElementById("container")
 
+/////////////////////////////////////////////////////// GESTIONE EMOZIONI /////////////////////////////////////////////////////// 
+
 var veta;
 var vEmozione;
 
@@ -183,70 +162,10 @@ var initMorphcast = new Promise((res) => {
     .load());
 });
 
-initMorphcast.then(({start}) => start());
-
-// EMOZIONI PRECISE, AROUSAL E VALENCE
-var precisa;
-var arousal = 0;
-var valence = 0;
-var arousalM = [];
-var valcenceM = [];
-var lamediaA;
-var lamediaV;
-
-window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
-  precisa = evt2.detail.output.affects38;
-  arousal = evt2.detail.output.arousal;
-  valence = evt2.detail.output.valence;
-
-  const findHighest = obj => {
-    const values = Object.values(obj);
-    const max = Math.max.apply(Math, values);
-    for (key in obj) {
-      if (obj[key] === max) {
-        return {
-          [key]: max
-        };
-      };
-    };
-  };
-
-  var emozionePrecisa = Object.keys(findHighest(precisa))[0];
-  document.getElementById('preciso').innerHTML = emozionePrecisa;
-
-  arousalM.push(arousal);
-  valcenceM.push(valence);
-  return;
-});
-
-setInterval(function() {
-
-  var lasommaA = arousalM.reduce((a, b) => a + b, 0);
-  lamediaA = (lasommaA / arousalM.length) || 0;
-
-  var lasommaV = valcenceM.reduce((a, b) => a + b, 0);
-  lamediaV = (lasommaV / valcenceM.length) || 0;
-
-  document.getElementById('ar').innerHTML = Math.round((lamediaA + Number.EPSILON) * 100) / 100;
-  document.getElementById('va').innerHTML = Math.round((lamediaV + Number.EPSILON) * 100) / 100;
-
-  arousalM = [];
-  valcenceM = [];
-
-  return;
-
-}, 2000);
-
-// EMOZIONI
-
 var emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
-
 var checker = 0
-
 var asseY = [0]
-
 var index = 0
-
 var asseX = [0]
 
 var storicoEmozioni = [0]
@@ -259,7 +178,6 @@ var oldVar
 var userIsThere
 
 function checkFaccia() {
-
   window.addEventListener(CY.modules().FACE_DETECTOR.eventName, (evt) => {
     if (evt.detail.totalFaces > 0) {
       userIsThere = true;
@@ -268,7 +186,6 @@ function checkFaccia() {
       userIsThere = false;
       return;
     }
-
   });
 }
 
@@ -331,6 +248,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
     $(".square").css("width", larghezzaContainer / checker + "px")
 
+// EMOZIONI MEDIE
+
     if (storicoEmozioni.length >= 9) {
 
       testVariable = varpiufreq
@@ -339,57 +258,124 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         if (varpiufreq == 0) {
           document.getElementById("emozioneMedia").innerHTML = "Rabbia";
+          r.style.setProperty('--color-1', '#A6121F');
+          r.style.setProperty('--color-2', '#a6121e00');
+          audioObj.pause();
+          audio0.play();
+          audio1.pause();
+          audio2.pause();
+          audio3.pause();
+          audio4.pause();
+          audio5.pause();
+          audio6.pause();
+
           adjArrabbiato();
-          // if (videoisfinito) {adjArrabbiato();} //--> APPENA IL VIDEO FINISCE MI PARTE LA VARIABILE CHE SCATENA VARPIUFREQ
 
         } else if (varpiufreq == 1) {
           document.getElementById("emozioneMedia").innerHTML = "Disgusto"
-          adjDisgusto()
+          r.style.setProperty('--color-1', '#f2d52e');
+          r.style.setProperty('--color-2', '#f2d52e00');
+          audioObj.pause();
+          audio0.pause();
+          audio1.play();
+          audio2.pause();
+          audio3.pause();
+          audio4.pause();
+          audio5.pause();
+          audio6.pause();
+
+          adjDisgusto();
+
         } else if (varpiufreq == 2) {
           document.getElementById("emozioneMedia").innerHTML = "Paura"
-          adjPaura()
-        } else if (varpiufreq == 6) {
-          document.getElementById("emozioneMedia").innerHTML = "Felicità"
-          linkAudio = 'audio.mp3';
-          continuaFelice()
-          //audioObj = new Audio(linkAudio).play();
+          r.style.setProperty('--color-1', '#df72e8');
+          r.style.setProperty('--color-2', '#de72e800');
+          audioObj.pause();
+          audio0.pause();
+          audio1.pause();
+          audio2.play();
+          audio3.pause();
+          audio4.pause();
+          audio5.pause();
+          audio6.pause();
+
+          adjPaura();
+
+        } else if (varpiufreq == 3) {
+          document.getElementById("emozioneMedia").innerHTML = "Triste"
+          r.style.setProperty('--color-1', '#163792');
+          r.style.setProperty('--color-2', '#16379200');
+          audioObj.pause();
+          audio0.pause();
+          audio1.pause();
+          audio2.pause();
+          audio3.play();
+          audio4.pause();
+          audio5.pause();
+          audio6.pause();
+
+          adjTriste();
+
         } else if (varpiufreq == 4) {
           document.getElementById("emozioneMedia").innerHTML = "Neutrale"
+          r.style.setProperty('--color-1', '#c4c4c4');
+          r.style.setProperty('--color-2', '#c4c4c400');
+          audioObj.pause();
+          audio0.pause();
+          audio1.pause();
+          audio2.pause();
+          audio3.pause();
+          audio4.play();
+          audio5.pause();
+          audio6.pause();
 
           setTimeout(function() {
             console.log("neutrale per troppo tempo")
             stimolaNeutrale();
           }, 20000);
 
-          linkAudio = 'triste.m4a';
-          //audioObj = new Audio(linkAudio).play();
-        } else if (varpiufreq == 3) {
-          document.getElementById("emozioneMedia").innerHTML = "Triste"
-          adjTriste()
         } else if (varpiufreq == 5) {
           document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
-        }
+          r.style.setProperty('--color-1', '#2acbd6');
+          r.style.setProperty('--color-2', '#2acad600');
+          audioObj.pause();
+          audio0.pause();
+          audio1.pause();
+          audio2.pause();
+          audio3.pause();
+          audio4.pause();
+          audio5.play();
+          audio6.pause();
 
+        } else if (varpiufreq == 6) {
+          document.getElementById("emozioneMedia").innerHTML = "Felicità"
+          r.style.setProperty('--color-1', '#10812d');
+          r.style.setProperty('--color-2', '#10812c00');
+          audioObj.pause();
+          audio0.pause();
+          audio1.pause();
+          audio2.pause();
+          audio3.pause();
+          audio4.pause();
+          audio5.pause();
+          audio6.play();
+
+          continuaFelice();
+        }
       } else {
         // console.log("no change color")
       }
 
       oldVar = testVariable;
-
     }
 
     //fare check delle ultime 10 misurazioni e vedere qual è il valore preponderante
-
     var emozioneMax
 
     emozioniGrafico = [0, 0, 0, 0, 0, 0, 0]
-
     emozioniGrafico[index] = emozioniGrafico[index] + 1;
-
     checker++;
-
     asseY.push(checker)
-
     asseX.push(index)
 
     graficoEmo.data.datasets[0].data = asseX;
@@ -405,18 +391,18 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
     } else if (index == 2) {
       emozioneMax = "Paura"
       paura()
-    } else if (index == 6) {
-      emozioneMax = "Felicità"
-      felice()
-    } else if (index == 4) {
-      emozioneMax = "Neutrale"
-      neutrale()
     } else if (index == 3) {
       emozioneMax = "Triste"
       triste()
+    } else if (index == 4) {
+      emozioneMax = "Neutrale"
+      neutrale()
     } else if (index == 5) {
       emozioneMax = "Sorpreso"
       sorpreso()
+    } else if (index == 6) {
+      emozioneMax = "Felicità"
+      felice()
     }
 
   } else {
@@ -429,6 +415,86 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 // const gen_div = document.querySelector("#gender");
 const emo_div = document.querySelector("#emotion");
 
+// EMOZIONI ISTANTANEE
+
+async function rabbia() {
+  document.getElementById('emotion').innerHTML = "<b>ARRABBIATO</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "rabbia");
+  cont.appendChild(div);
+  return;
+}
+
+async function disgusto() {
+  document.getElementById('emotion').innerHTML = "<b>DISGUSTATO</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "disgusto");
+  cont.appendChild(div);
+  return;
+}
+
+async function paura() {
+  document.getElementById('emotion').innerHTML = "<b>IMPAURITO</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "paura");
+  cont.appendChild(div);
+  return;
+}
+
+async function triste() {
+  document.getElementById('emotion').innerHTML = "<b>TRISTE</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "triste");
+  cont.appendChild(div);
+  return;
+}
+
+async function neutrale() {
+  document.getElementById('emotion').innerHTML = "<b>NEUTRALE</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - (Math.abs(lamediaV))/2) + "%");
+  div.setAttribute("id", "neutrale");
+  cont.appendChild(div);
+  return;
+}
+
+async function sorpreso() {
+  document.getElementById('emotion').innerHTML = "<b>SORPRESO</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "sorpreso");
+  cont.appendChild(div);
+  return;
+}
+
+async function felice() {
+  document.getElementById('emotion').innerHTML = "<b>FELICE</b>";
+
+  var div = document.createElement("div");
+  div.setAttribute("class", "square");
+  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
+  div.setAttribute("id", "felice");
+  cont.appendChild(div);
+  return;
+}
+
+//EMOZIONI ARDUINO
 async function adjArrabbiato() {
   if (isConnectted) {
     await writer.write(enc.encode(`255-75-0@`)); //warm color
@@ -450,16 +516,16 @@ async function adjPaura() {
   }
 }
 
-async function stimolaNeutrale() {
+async function adjTriste() {
   if (isConnectted) {
-    await writer.write(enc.encode(`225-105-20@`)); //orange
+    await writer.write(enc.encode(`120-225-0@`)); //warm green
     return;
   }
 }
 
-async function adjTriste() {
+async function stimolaNeutrale() {
   if (isConnectted) {
-    await writer.write(enc.encode(`120-225-0@`)); //warm green
+    await writer.write(enc.encode(`225-105-20@`)); //orange
     return;
   }
 }
@@ -472,109 +538,164 @@ async function continuaFelice() {
   }
 }
 
-async function felice() {
-  document.getElementById('emotion').innerHTML = "<b>FELICE</b>";
+// EMOZIONI PRECISE, AROUSAL E VALENCE
+var precisa;
+var arousal = 0;
+var valence = 0;
+var arousalM = [];
+var valcenceM = [];
+var lamediaA;
+var lamediaV;
 
-  r.style.setProperty('--color-1', 'rgba(0,255,0,1)');
-  r.style.setProperty('--color-2', 'rgba(0,255,0,0)');
+window.addEventListener(CY.modules().FACE_AROUSAL_VALENCE.eventName, (evt2) => {
+  precisa = evt2.detail.output.affects38;
+  arousal = evt2.detail.output.arousal;
+  valence = evt2.detail.output.valence;
 
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "felice");
-  cont.appendChild(div);
+  const findHighest = obj => {
+    const values = Object.values(obj);
+    const max = Math.max.apply(Math, values);
+    for (key in obj) {
+      if (obj[key] === max) {
+        return {
+          [key]: max
+        };
+      };
+    };
+  };
 
+  var emozionePrecisa = Object.keys(findHighest(precisa))[0];
+  document.getElementById('preciso').innerHTML = emozionePrecisa;
+
+  arousalM.push(arousal);
+  valcenceM.push(valence);
+  return;
+});
+
+setInterval(function() {
+
+  var lasommaA = arousalM.reduce((a, b) => a + b, 0);
+  lamediaA = (lasommaA / arousalM.length) || 0;
+
+  var lasommaV = valcenceM.reduce((a, b) => a + b, 0);
+  lamediaV = (lasommaV / valcenceM.length) || 0;
+
+  document.getElementById('ar').innerHTML = Math.round((lamediaA + Number.EPSILON) * 100) / 100;
+  document.getElementById('va').innerHTML = Math.round((lamediaV + Number.EPSILON) * 100) / 100;
+
+  arousalM = [];
+  valcenceM = [];
+
+  return;
+
+}, 2000);
+
+// I FRAME
+function prepareFrame() {
+  var ifrm = document.createElement("iframe");
+  ifrm.setAttribute("src", "figo");
+  ifrm.style.width = "30vw";
+  ifrm.style.height = "30vw";
+  ifrm.style.display = "block";
+  ifrm.style.position = "absolute";
+  ifrm.style.left = "35vw";
+  ifrm.style.top = "20%";
+  ifrm.style.border = "none";
+  ifrm.style.backgroundColor = "black";
+  document.body.appendChild(ifrm);
+}
+
+/////////////////////////////////////////////////////// CONTROLS /////////////////////////////////////////////////////// 
+
+// nascondi controls
+var isShown;
+window.document.onkeydown = function(e) {
+  if (!e) {
+    e = event;
+  }
+  if (e.keyCode == 81) {
+    if(isShown == false){
+      document.getElementById('upbar').style.display = 'block';
+      isShown = true;
+    }else{
+      document.getElementById('upbar').style.display = 'none';
+      isShown = false;
+    }
+  }
+}
+
+// nascondi schemi
+var n = 0;
+function nasconditutto() {
+  if(n==0){
+    document.getElementById('schemi').style.display = 'block';
+    n = 1;
+  } else {
+    document.getElementById('schemi').style.display = 'none';
+    n = 0;
+  }
+}
+
+/////////////////////////////////////////////////////// FINE ESPERIENZA /////////////////////////////////////////////////////// 
+
+//tempo scaduto
+async function finito() {
+  document.getElementById('schemi').style.display = 'block';
+  console.log('TEMPO SCADUTO');
+
+  audioObj.pause();
+  audio0.pause();
+  audio1.pause();
+  audio2.pause();
+  audio3.pause();
+  audio4.pause();
+  audio5.pause();
+  audio6.pause();
+
+  document.getElementById('closing').style.display = 'block';
+
+  initMorphcast.then(({stop}) => stop());
+  capture();
   return;
 }
 
-
-async function rabbia() {
-  document.getElementById('emotion').innerHTML = "<b>ARRABBIATO</b>";
-
-  r.style.setProperty('--color-1', 'rgba(255,0,0,1)');
-  r.style.setProperty('--color-2', 'rgba(255,0,0,0)');
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "rabbia");
-  cont.appendChild(div);
-
-  return;
+//download grafici
+function capture() {
+  const captureElement = document.querySelector('#container')
+  html2canvas(captureElement)
+    .then(canvas => {
+      canvas.style.display = 'none'
+      document.body.appendChild(canvas)
+      return canvas
+    })
+    .then(canvas => {
+      const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+      const a = document.createElement('a')
+      a.setAttribute('download', usName + '.png')
+      a.setAttribute('href', image)
+      a.click()
+      canvas.remove()
+    })
 }
 
-async function triste() {
-  document.getElementById('emotion').innerHTML = "<b>TRISTE</b>";
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "triste");
-  cont.appendChild(div);
-
-
-  r.style.setProperty('--color-1', 'rgba(0,0,255,1)');
-  r.style.setProperty('--color-2', 'rgba(0,0,255,0)');
-
-  return;
+// final video
+function final_open() {
+  var lightBoxVideo = document.getElementById("finalvideo");
+  window.scrollTo(0, 0);
+  document.getElementById('light2').style.display = 'block';
+  //document.getElementById('fade2').style.display = 'block';
+  //lightBoxVideo.play();
 }
 
-async function disgusto() {
-  document.getElementById('emotion').innerHTML = "<b>DISGUSTATO</b>";
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "disgusto");
-  cont.appendChild(div);
-
-  r.style.setProperty('--color-1', 'rgba(255,255,0,1)');
-  r.style.setProperty('--color-2', 'rgba(255,255,0,0)');
-
-  return;
+function final_close() {
+  var lightBoxVideo = document.getElementById("finalvideo");
+  document.getElementById('light2').style.display = 'none';
+  //document.getElementById('fade2').style.display = 'none';
+  //lightBoxVideo.pause();
 }
 
-async function neutrale() {
-  document.getElementById('emotion').innerHTML = "<b>NEUTRALE</b>";
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - (Math.abs(lamediaV))/2) + "%");
-  div.setAttribute("id", "neutrale");
-  cont.appendChild(div);
-
-  r.style.setProperty('--color-1', 'rgba(255,255,255,1)');
-  r.style.setProperty('--color-2', 'rgba(255,255,255,0)');
-
-  return;
-}
-
-async function paura() {
-  document.getElementById('emotion').innerHTML = "<b>IMPAURITO</b>";
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "paura");
-  cont.appendChild(div);
-
-  r.style.setProperty('--color-1', 'rgba(255,0,255,1)');
-  r.style.setProperty('--color-2', 'rgba(255,0,255,0)');
-
-  return;
-}
-
-async function sorpreso() {
-  document.getElementById('emotion').innerHTML = "<b>SORPRESO</b>";
-
-  var div = document.createElement("div");
-  div.setAttribute("class", "square");
-  div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
-  div.setAttribute("id", "sorpreso");
-  cont.appendChild(div);
-
-  r.style.setProperty('--color-1', 'rgba(0,255,255,1)');
-  r.style.setProperty('--color-2', 'rgba(0,255,255,0)');
-
-  return;
+//reload page
+function reload_page() {
+  location.reload();
+  return false;
 }

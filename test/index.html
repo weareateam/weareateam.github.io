@@ -12,13 +12,33 @@
   <title>Movel | MVP</title>
 </head>
 
-<body id="myId" onload="lightbox_open()" style="overflow: hidden;">
+<body id="myId" onload="apertura()" style="overflow: hidden;">
+
+<!-- SCHERMATA INIZIALE -->
+
+<div class="opening" id="opening" style="z-index: 5;">
+ <h1 style="color: #FFF; text-align: center;"> Welcome </h1>
+ <h4 style="color: #FFF; text-align: center;"> Tell us who you are and where you are ready hit play </h4>
+
+ <div class="iltuonome">
+    <form onsubmit="return false;">
+      <div style = "position:relative; margin-bottom:45px;">      
+        <input id="userName" type="text" required />
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Your Name</label>
+      </div>
+
+      <input type="submit" value="Start" onclick="lightbox_open();" />
+    </form> 
+  </div>
+</div>
 
 <!-- POPUP VIDEO -->
 <div id="light">
-  <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
-  <video id="VisaChipCardVideo" muted="muted" width="900" controls>
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  <a class="boxclose" style="display: none !important;" onclick="lightbox_close();"></a>
+  <video id="VisaChipCardVideo" width="1200" controls>
+    <source src="media/intro.mp4" type="video/mp4">
     <!--Browser does not support <video> tag -->
   </video>
 
@@ -33,33 +53,34 @@
 <div id="fade" onClick="lightbox_close();"></div>
 
 
-
 <!-- BODY -->
 <div class="contenitore">
 
-  <!-- CONTROLLI -->
-  <section id="controls">
-    <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 15px;">
-      <i class="fa fa-usb" aria-hidden="true"></i>
-    </button>
-    <button onclick="nasconditutto()" style="margin-right: 15px;">
-      <i class="fa fa-eye" aria-hidden="true"></i>
-    </button>
-    <button onclick="lightbox_open()" style="margin-right: 15px;">
-      <i class="fa fa-play-circle" aria-hidden="true"></i>
-    </button>
-  </section>
+  <div id="upbar" style="display: none;">
+    <!-- CONTROLLI -->
+    <section id="controls">
+      <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 15px;">
+        <i class="fa fa-usb" aria-hidden="true"></i>
+      </button>
+      <button onclick="nasconditutto()" style="margin-right: 15px;">
+        <i class="fa fa-eye" aria-hidden="true"></i>
+      </button>
+      <button onclick="lightbox_open()" style="margin-right: 15px;">
+        <i class="fa fa-play-circle" aria-hidden="true"></i>
+      </button>
+    </section>
 
-  <!-- TIME -->
-  <h2 style=" background-color:#000; color:#FFF; text-align:center; margin: 0; padding-top: 25px; padding-bottom: 25px; ">time <span id="timer"></span></h2>
+    <!-- TIME -->
+    <h2 style=" background-color:#000; color:#FFF; text-align:center; margin: 0; padding-top: 25px; padding-bottom: 25px; ">time <span id="timer"></span></h2>
 
-  <!-- EMOZIONI -->
-  <div class ="NOW">
-    <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
+    <!-- EMOZIONI -->
+    <div class ="NOW">
+      <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
+    </div>
   </div>
 
   <!-- ALERT NO FACCIA -->
-  <h2 id="noFace" style="position: absolute; left: 50vw; top: 35vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
+  <h2 id="noFace" style="position: absolute; left: 50vw; top: 11vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
 
   <!-- GRAFICI -->
   <div class="schemi" id="schemi" style="z-index: 3;">
@@ -75,9 +96,36 @@
 
 </div>
 
-  <!-- INTRATTENIMENTO -->
-<iframe src="http://www.koalastothemax.com/" style="width: 90%; height: 80%; display: block; position: absolute; left: 5%; top: 13%; border:none;">
-</iframe>
+  <!-- SCHERMATA FINALE -->
+<div class="opening" id="closing" style="z-index: 5; display: none;">
+  <h1 style="color: #FFF; text-align: center;"> Thank You </h1>
+  <h4 style="color: #FFF; text-align: center;"> The experience is over </h4>
+
+  <div class="iltuonome">
+    <form onsubmit="return false;">
+      <input type="submit" value="Watch the Conclusion" onclick="final_open();" />
+      <input type="submit" value="Reload Experience" onclick="reload_page();" />
+    </form> 
+  </div>
+
+</div>
+
+<!-- FINAL VIDEO -->
+
+<div id="light2">
+  <a class="boxclose" onclick="final_close();"></a>
+  <video id="finalvideo" width="1200" controls>
+    <source src="media/intro.mp4" type="video/mp4">
+    <!--Browser does not support <video> tag -->
+  </video>
+
+  <script>/*<![CDATA[*/
+    document.querySelector('video').addEventListener('ended',function(){
+      final_close();
+    }, false);
+  /*]]>*/</script>
+
+</div>
 
 <!-- BG EFFECT -->
   <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw; left:0%;">
