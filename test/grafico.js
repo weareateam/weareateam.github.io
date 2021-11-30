@@ -132,6 +132,29 @@ var graficoEmo = new Chart('chart', {
   data: data
 });
 
+// I FRAME
+
+var linkFrame = "figo";
+var ifrm;
+
+function prepareFrame() {
+  ifrm = document.createElement("iframe");
+  ifrm.style.width = "40vw";
+  ifrm.style.height = "40vw";
+  ifrm.style.display = "block";
+  ifrm.style.position = "absolute";
+  ifrm.style.left = "30vw";
+  ifrm.style.top = "12vw";
+  ifrm.style.border = "none";
+  ifrm.style.backgroundColor = "black";
+  document.body.appendChild(ifrm);
+
+  frameSettings();
+}
+
+function frameSettings() {
+  ifrm.setAttribute("src", linkFrame);
+}
 
 /////////////////////////////////////////////////////// GESTIONE EMOZIONI /////////////////////////////////////////////////////// 
 
@@ -276,6 +299,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
+          linkFrame = 'http://eelslap.com/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -299,6 +324,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
+          linkFrame = 'http://www.muchbetterthanthis.com/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -322,6 +349,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
+          linkFrame = 'https://jacksonpollock.org/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -345,6 +374,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
+          linkFrame = 'https://cat-bounce.com/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -368,6 +399,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.play();
           audio5.pause();
           audio6.pause();
+          linkFrame = 'http://www.staggeringbeauty.com/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -394,6 +427,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.play();
           audio6.pause();
+          linkFrame = 'http://www.muchbetterthanthis.com/'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -405,8 +440,10 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Felicità"
-          r.style.setProperty('--color-1', colorRainbow);
-          r.style.setProperty('--color-2', colorRainbowtra);
+          //r.style.setProperty('--color-1', colorRainbow);
+          //r.style.setProperty('--color-2', colorRainbowtra);
+          r.style.setProperty('--color-1', '#ffe800');
+          r.style.setProperty('--color-2', '#ffe80000');
           audioObj.pause();
           audio0.pause();
           audio1.pause();
@@ -415,6 +452,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.play();
+          linkFrame = 'figo'
+          frameSettings();
 
           var div = document.createElement("div");
           div.setAttribute("class", "squarePlus");
@@ -662,21 +701,6 @@ setInterval(function() {
 
 }, 2000);
 
-// I FRAME
-function prepareFrame() {
-  var ifrm = document.createElement("iframe");
-  ifrm.setAttribute("src", "figo");
-  ifrm.style.width = "30vw";
-  ifrm.style.height = "30vw";
-  ifrm.style.display = "block";
-  ifrm.style.position = "absolute";
-  ifrm.style.left = "35vw";
-  ifrm.style.top = "20%";
-  ifrm.style.border = "none";
-  ifrm.style.backgroundColor = "black";
-  document.body.appendChild(ifrm);
-}
-
 /////////////////////////////////////////////////////// CONTROLS /////////////////////////////////////////////////////// 
 
 // nascondi controls
@@ -689,6 +713,7 @@ window.document.onkeydown = function(e) {
     if(isShown == false){
       document.getElementById('upbar').style.display = 'block';
       isShown = true;
+
     }else{
       document.getElementById('upbar').style.display = 'none';
       isShown = false;
