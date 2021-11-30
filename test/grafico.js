@@ -43,7 +43,7 @@ function lightbox_close() {
 
   // set timer
   document.getElementById('timer').innerHTML =
-    30 + ":" + 00;
+    03 + ":" + 00;
   startTimer();
 
   // play music
