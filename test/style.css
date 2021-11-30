@@ -151,6 +151,33 @@ section {
   display:none;
 }
 
+.boxcloseInit {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
+  background: #000;
+  font-size: 17px;
+  font-weight: bold;
+  display: block;
+  line-height: 0px;
+  padding: 20px 10px;
+  position: absolute;
+  margin: 0 45%;
+  bottom: 25px;
+  z-index: 1002;
+  opacity: 0.9;
+}
+
+.boxcloseInit:before {
+  content: "i feel ready";
+}
+
+#fade:hover ~ .boxcloseInit {
+  display:none;
+}
+
 .square{
   width: 0px;
   height:100px;

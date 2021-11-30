@@ -25,13 +25,13 @@ function lightbox_first() {
     var lightBoxVideo = document.getElementById("startingVideo");
     window.scrollTo(0, 0);
 
-    var nowIsTime = "CRY";
+    var nowIsTime;
     var Scelta;
     getRandomInt();
 
     function getRandomInt(min, max) {
       var min = 1;
-      var max = 3;
+      var max = 4;
       min = Math.ceil(min);
       max = Math.floor(max);
       return Scelta = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
@@ -71,13 +71,25 @@ function lightbox_first() {
       video.controls = false;
     }
 
-    document.getElementById("isTimeTo").innerHTML = "Now we will make you " + nowIsTime;
+    document.getElementById("isTimeTo").innerHTML = "now we will make you " + nowIsTime;
 
     document.getElementById('opening').style.display = 'none';
     document.getElementById('fadeInit').style.display = 'block';
     setTimeout(function() {
+
       document.getElementById('lightInit').style.display = 'block';
-    }, 4000);
+
+      var opacity = 0;
+      MyFadeFunction();
+      function MyFadeFunction() {
+         if (opacity < 1) {
+            opacity += .1;
+            setTimeout(function(){MyFadeFunction()},100);
+         }
+         document.getElementById('lightInit').style.opacity = opacity;
+      }
+
+    }, 3000);
     lightBoxVideo.play();
 
     return;
@@ -99,10 +111,21 @@ function lightbox_firstClose() {
 function lightbox_open() {
   var lightBoxVideo = document.getElementById("VisaChipCardVideo");
   window.scrollTo(0, 0);
-  document.getElementById('light').style.display = 'block';
   document.getElementById('fade').style.display = 'block';
-
   document.getElementById('opening').style.display = 'none';
+
+  document.getElementById('light').style.display = 'block';
+  
+  var opacity = 0;
+  MyFadeFunction();
+  function MyFadeFunction() {
+     if (opacity < 1) {
+        opacity += .1;
+        setTimeout(function(){MyFadeFunction()},100);
+     }
+     document.getElementById('light').style.opacity = opacity;
+  }
+
   lightBoxVideo.play();
   lightBoxVideo.controls = false;
 }
@@ -117,7 +140,7 @@ function lightbox_close() {
 
   // set timer
   document.getElementById('timer').innerHTML =
-    03 + ":" + 00;
+    01 + ":" + 00;
   startTimer();
 
   // play music
@@ -141,8 +164,15 @@ function startTimer() {
   setTimeout(startTimer, 1000);
 
   // when the timer stops
-  if (s == 0) {
-    if (m == 0) {
+  if (m == 0) {
+    if (s == 10) {
+      fadeAll();
+    }
+    if (s == 5) {
+      partiCountdown();
+      fadeBg();
+    }
+    if (s == 0) {
       finito();
     }
   }
@@ -156,6 +186,48 @@ function checkSecond(sec) {
     sec = "59"
   };
   return sec;
+}
+
+// fade all
+function fadeAll(){
+  var opacity = 1;
+  MyFadeFunction();
+  function MyFadeFunction() {
+     if (opacity > 0) {
+        opacity -= .05;
+        setTimeout(function(){MyFadeFunction()},100);
+     }
+     document.getElementById('divertimento').style.opacity = opacity;
+  }
+}
+
+// fade BG
+function fadeBg(){
+  var opacity = 1;
+  MyFadeFunction();
+  function MyFadeFunction() {
+     if (opacity > 0) {
+        opacity -= .05;
+        setTimeout(function(){MyFadeFunction()},100);
+     }
+     document.getElementById('bg-wrap').style.opacity = opacity;
+  }
+}
+
+// countdown finale
+function partiCountdown(){
+  document.getElementById('countdownFinale').style.display = 'block';
+
+  var counter = 5;
+
+  setInterval(function() {
+    counter = counter - 1;
+    document.getElementById('countdownFinale').innerHTML = counter;
+  }, 1000);
+
+  setTimeout(function() {
+    document.getElementById('countdownFinale').style.display = 'none';
+  }, 5000);
 }
 
 // grafico
@@ -212,12 +284,13 @@ var ifrm;
 
 function prepareFrame() {
   ifrm = document.createElement("iframe");
+  ifrm.id = "divertimento";
   ifrm.style.width = "40vw";
   ifrm.style.height = "40vw";
   ifrm.style.display = "block";
   ifrm.style.position = "absolute";
   ifrm.style.left = "30vw";
-  ifrm.style.top = "12vw";
+  ifrm.style.top = "12vh";
   ifrm.style.border = "none";
   ifrm.style.backgroundColor = "black";
   document.body.appendChild(ifrm);

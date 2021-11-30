@@ -36,7 +36,7 @@
 
 <!-- POPUP VIDEO -->
 <div id="lightInit">
-  <a class="boxclose" onclick="lightbox_firstClose();"></a>
+  <a class="boxcloseInit" onclick="lightbox_firstClose();"></a>
   <video id="startingVideo" width="1200" controls>
     <!--Browser does not support <video> tag -->
   </video>
@@ -63,7 +63,7 @@
   </video>
 
   <script>/*<![CDATA[*/
-    document.querySelector('video').addEventListener('ended',function(){
+    document.getElementById('VisaChipCardVideo').addEventListener('ended',function(){
       lightbox_close();
     }, false);
   /*]]>*/</script>
@@ -72,9 +72,9 @@
 
 <div id="fade" onClick="lightbox_close();"></div>
 
-  <!-- ALERT NO FACCIA -->
-  <h2 id="noFace" style="position: absolute; left: 50vw; top: 9vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
-  
+<!-- ALERT NO FACCIA -->
+<h2 id="noFace" style="position: absolute; left: 50vw; top: 7vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
+
 <!-- BODY -->
 <div class="contenitore">
 
@@ -115,6 +115,9 @@
   </div>
 
 </div>
+
+<!-- COUNTDOWN -->
+<h1 id="countdownFinale" style="display:none; font-size:150px; position: absolute; left: 50vw; top: 38vh; transform: translate(-50%, -50%); mix-blend-mode: exclusion; color: white; z-index: 15;">5</h1>
 
   <!-- SCHERMATA FINALE -->
 <div class="opening" id="closing" style="z-index: 5; display: none;">
