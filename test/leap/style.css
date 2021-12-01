@@ -1,10 +1,14 @@
+body{
+  cursor: none;
+}
+
 .slide {
     text-align: center;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
   
   .section:nth-child(odd) .slide:nth-child(odd) {
-    background-color: #3498db;
+    background-color: #000000;
   }
   
   .section:nth-child(odd) .slide:nth-child(even) {

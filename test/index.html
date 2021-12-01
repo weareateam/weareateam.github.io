@@ -80,7 +80,7 @@
 <div id="fade" onClick="lightbox_close();"></div>
 
 <!-- ALERT NO FACCIA -->
-<h2 id="noFace" style="position: absolute; left: 50vw; top: 7vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white">FACE NOT DETECTED</h2>
+<h2 id="noFace" style="position: absolute; left: 50vw; top: 7vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white; z-index: 1001 !important;">FACE NOT DETECTED</h2>
 
 <!-- BODY -->
 <div class="contenitore">
@@ -156,7 +156,7 @@
   </video>
 
   <script>/*<![CDATA[*/
-    document.querySelector('video').addEventListener('ended',function(){
+    document.getElementById('finalvideo').addEventListener('ended',function(){
       final_close();
     }, false);
   /*]]>*/</script>
