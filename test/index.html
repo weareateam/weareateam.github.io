@@ -29,7 +29,7 @@
 
  <div class="iltuonome">
     <form onsubmit="return false;">
-      <div style = "position:relative; margin-bottom:45px;">      
+      <div style = "position:relative; margin-bottom:45px;">
         <input id="userName" type="text" required />
         <span class="highlight"></span>
         <span class="bar"></span>
@@ -37,7 +37,7 @@
       </div>
 
       <input type="submit" value="Start" onclick="lightbox_first();" />
-    </form> 
+    </form>
   </div>
 </div>
 
@@ -59,13 +59,13 @@
 </div>
 
 <div id="fadeInit" onClick="lightbox_firstClose();">
-  <h2 id="isTimeTo" style="color:#FFF; margin: 0; position: absolute; text-align:center; width:50% ; left:25%; top:40%;"></h2>
+  <h2 id="isTimeTo" style="color:#FFF; margin: 0; position: absolute; text-align:center; width:50% ; left:25%; top:50%;"></h2>
 </div>
 
 <div id="light">
   <a class="boxclose" style="display: none !important;" onclick="lightbox_close();"></a>
   <video id="VisaChipCardVideo" width="1200" controls>
-    <source src="media/intro.mp4" type="video/mp4">
+    <source src="media/intro.mov" type="video/mp4">
     <!--Browser does not support <video> tag -->
   </video>
 
@@ -105,11 +105,19 @@
     <!-- EMOZIONI -->
     <div class ="NOW">
       <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
+      <audio id="audioObj" src="media/base.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio0" src="media/triste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio1" src="media/audio.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio2" src="media/noFear.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio3" src="media/noTriste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio4" src="media/noNeutral.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio5" src="media/piuSorpreso.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+      <audio id="audio6" src="media/piuHappy.m4a" loop></audio>
     </div>
   </div>
 
   <!-- GRAFICI -->
-  <div class="schemi" id="schemi" style="z-index: 3;">
+  <div class="schemi" id="schemi" style="z-index: 3;display:block">
     <div class ="precise">
       <h3 id="preciso" style="color: white; text-align:left; margin: 0; display:inline-block; width: 175px;">loading</h3>
       <h3 id="ar" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
@@ -133,7 +141,7 @@
     <form onsubmit="return false;">
       <input type="submit" value="Watch the Conclusion" onclick="final_open();" />
       <input type="submit" value="Reload Experience" onclick="reload_page();" />
-    </form> 
+    </form>
   </div>
 
 </div>
@@ -143,7 +151,7 @@
 <div id="light2">
   <a class="boxclose" onclick="final_close();"></a>
   <video id="finalvideo" width="1200" controls>
-    <source src="media/intro.mp4" type="video/mp4">
+    <source src="media/out.mov" type="video/mp4">
     <!--Browser does not support <video> tag -->
   </video>
 

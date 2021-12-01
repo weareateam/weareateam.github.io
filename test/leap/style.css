@@ -18,3 +18,7 @@
   .section:nth-child(even) .slide:nth-child(even) {
     background-color: #e74c3c;
   }
+
+  .notizia {
+    width: 100%;
+  }

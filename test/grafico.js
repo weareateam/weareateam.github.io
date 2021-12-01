@@ -6,16 +6,17 @@ function myfunc(){
       document.getElementById('buttonazzo').style.display = 'block';
 	}
 
-/////////////////////////////////////////////////////// INIZIO ESPERIENZA /////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////// INIZIO ESPERIENZA ///////////////////////////////////////////////////////
 
-audioObj = new Audio("media/base.m4a");
-audio0 = new Audio("media/triste.m4a");
-audio1 = new Audio("media/audio.mp3");
-audio2 = new Audio("media/noFear.m4a");
-audio3 = new Audio("media/noTriste.m4a");
-audio4 = new Audio("media/noNeutral.m4a");
-audio5 = new Audio("media/piuSorpreso.m4a");
-audio6 = new Audio("media/piuHappy.m4a");
+audioObj = $('#audioObj').get(0);
+audio0 = $('#audio0').get(0);
+audio1 = $('#audio1').get(0);
+audio2 = $('#audio2').get(0);
+audio3 = $('#audio3').get(0);
+audio4 = $('#audio4').get(0);
+audio5 = $('#audio5').get(0);
+audio6 = $('#audio6').get(0);
+
 
 function apertura() {
   document.getElementById('opening').style.display = 'block';
@@ -124,7 +125,7 @@ function lightbox_open() {
   document.getElementById('opening').style.display = 'none';
 
   document.getElementById('light').style.display = 'block';
-  
+
   var opacity = 0;
   MyFadeFunction();
   function MyFadeFunction() {
@@ -288,30 +289,47 @@ var graficoEmo = new Chart('chart', {
 
 // I FRAME
 
-var linkFrame = "leap";
+var linkFrame = "leap/rabbia.html";
 var ifrm;
 
 function prepareFrame() {
   ifrm = document.createElement("iframe");
   ifrm.id = "divertimento";
-  ifrm.style.width = "40vw";
-  ifrm.style.height = "40vw";
-  ifrm.style.display = "block";
+  ifrm.style.width = "80vw";
+  ifrm.style.height = "44vw";
+  ifrm.style.display = "none";
   ifrm.style.position = "absolute";
-  ifrm.style.left = "30vw";
-  ifrm.style.top = "12vh";
+  ifrm.style.left = "10vw";
+  ifrm.style.top = "14vh";
   ifrm.style.border = "none";
   ifrm.style.backgroundColor = "black";
   document.body.appendChild(ifrm);
 
   frameSettings();
+
+  setTimeout(function() {
+
+    document.getElementById('divertimento').style.display = 'block';
+
+    var opacity = 0;
+    MyFadeFunction();
+    function MyFadeFunction() {
+       if (opacity < 1) {
+          opacity += .1;
+          setTimeout(function(){MyFadeFunction()},100);
+       }
+       document.getElementById('divertimento').style.opacity = opacity;
+    }
+
+  }, 3000);
+
 }
 
 function frameSettings() {
   ifrm.setAttribute("src", linkFrame);
 }
 
-/////////////////////////////////////////////////////// GESTIONE EMOZIONI /////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////// GESTIONE EMOZIONI ///////////////////////////////////////////////////////
 
 var cont = document.getElementById("container")
 var contPlus = document.getElementById("containerPlus")
@@ -355,10 +373,12 @@ var storicoEmozioni = [0]
 // Get the root element
 var r = document.querySelector(':root');
 
-var testVariable
-var oldVar
+var testVariable;
+var oldVar;
 
-var userIsThere
+var userIsThere;
+
+var varpiufreq;
 
 function checkFaccia() {
   window.addEventListener(CY.modules().FACE_DETECTOR.eventName, (evt) => {
@@ -423,7 +443,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
       return maxEl;
     }
 
-    var varpiufreq = mode(storicoEmozioni)
+    varpiufreq = mode(storicoEmozioni)
 
     console.log(storicoEmozioni, varpiufreq)
 
@@ -431,7 +451,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
     $(".square").css("width", larghezzaContainer / checker + "px")
 
-    $(".squarePlus").css("width", larghezzaContainer / ragazzi + "px")
+    $(".squarePlus").css("width", larghezzaContainer / checker + "px")
 
 // EMOZIONI MEDIE
 
@@ -448,21 +468,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Rabbia";
           r.style.setProperty('--color-1', '#FFF2CE');
           r.style.setProperty('--color-2', '#FFF2CE00');
-          audioObj.pause();
-          audio0.play();
-          audio1.pause();
-          audio2.pause();
-          audio3.pause();
-          audio4.pause();
-          audio5.pause();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "rabbia");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.play()
+            audio1.pause()
+            audio2.pause()
+            audio3.pause()
+            audio4.pause()
+            audio5.pause()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/rabbia.html'
+          frameSettings();
 
           adjArrabbiato();
 
@@ -473,21 +492,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Disgusto"
           r.style.setProperty('--color-1', '#4C86C1');
           r.style.setProperty('--color-2', '#4C86C100');
-          audioObj.pause();
-          audio0.pause();
-          audio1.play();
-          audio2.pause();
-          audio3.pause();
-          audio4.pause();
-          audio5.pause();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "disgusto");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.play()
+            audio2.pause()
+            audio3.pause()
+            audio4.pause()
+            audio5.pause()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/disgusto.html'
+          frameSettings();
 
           adjDisgusto();
 
@@ -498,21 +516,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Paura"
           r.style.setProperty('--color-1', '#C990EC');
           r.style.setProperty('--color-2', '#C990EC00');
-          audioObj.pause();
-          audio0.pause();
-          audio1.pause();
-          audio2.play();
-          audio3.pause();
-          audio4.pause();
-          audio5.pause();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "paura");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.pause()
+            audio2.play()
+            audio3.pause()
+            audio4.pause()
+            audio5.pause()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/paura.html'
+          frameSettings();
 
           adjPaura();
 
@@ -523,21 +540,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Triste"
           r.style.setProperty('--color-1', '#8CC444');
           r.style.setProperty('--color-2', '#8CC44400');
-          audioObj.pause();
-          audio0.pause();
-          audio1.pause();
-          audio2.pause();
-          audio3.play();
-          audio4.pause();
-          audio5.pause();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "triste");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.pause()
+            audio2.pause()
+            audio3.play()
+            audio4.pause()
+            audio5.pause()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/triste.html'
+          frameSettings();
 
           adjTriste();
 
@@ -548,21 +564,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Neutrale"
           r.style.setProperty('--color-1', '#FFA941');
           r.style.setProperty('--color-2', '#FFA94100');
-          audioObj.pause();
-          audio0.pause();
-          audio1.pause();
-          audio2.pause();
-          audio3.pause();
-          audio4.play();
-          audio5.pause();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "neutrale");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.pause()
+            audio2.pause()
+            audio3.pause()
+            audio4.play()
+            audio5.pause()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/neutrale.html'
+          frameSettings();
 
           setTimeout(function() {
             console.log("neutrale per troppo tempo")
@@ -576,21 +591,20 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
           r.style.setProperty('--color-1', '#2acbd6');
           r.style.setProperty('--color-2', '#2acad600');
-          audioObj.pause();
-          audio0.pause();
-          audio1.pause();
-          audio2.pause();
-          audio3.pause();
-          audio4.pause();
-          audio5.play();
-          audio6.pause();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "sorpreso");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.pause()
+            audio2.pause()
+            audio3.pause()
+            audio4.pause()
+            audio5.play()
+            audio6.pause()
+          }
+
+          linkFrame = 'leap/sorpreso.html'
+          frameSettings();
 
         } else if (varpiufreq == 6) {
           ragazzi = ragazzi + 1;
@@ -601,30 +615,23 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           //r.style.setProperty('--color-2', colorRainbowtra);
           r.style.setProperty('--color-1', '#ffe800');
           r.style.setProperty('--color-2', '#ffe80000');
-          audioObj.pause();
-          audio0.pause();
-          audio1.pause();
-          audio2.pause();
-          audio3.pause();
-          audio4.pause();
-          audio5.pause();
-          audio6.play();
-          linkFrame = 'leap'
-          frameSettings();
 
-          var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "felice");
-          contPlus.appendChild(div);
+					if (document.getElementById('light').style.display == 'none') {
+            audioObj.pause()
+            audio0.pause()
+            audio1.pause()
+            audio2.pause()
+            audio3.pause()
+            audio4.pause()
+            audio5.pause()
+            audio6.play()
+          }
+
+          linkFrame = 'leap/felice.html'
+          frameSettings();
 
           continuaFelice();
         }
-      } else {
-        // console.log("no change color")
-        var div = document.createElement("div");
-          div.setAttribute("class", "squarePlus");
-          div.setAttribute("id", "loadingcolor");
-          contPlus.appendChild(div);
       }
 
       oldVar = testVariable;
@@ -686,6 +693,27 @@ async function rabbia() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "rabbia");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -697,6 +725,27 @@ async function disgusto() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "disgusto");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -708,6 +757,28 @@ async function paura() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "paura");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
+
   return;
 }
 
@@ -719,6 +790,27 @@ async function triste() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "triste");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -730,6 +822,27 @@ async function neutrale() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - (Math.abs(lamediaV))/2) + "%");
   div.setAttribute("id", "neutrale");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -741,6 +854,27 @@ async function sorpreso() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "sorpreso");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -752,6 +886,27 @@ async function felice() {
   div.setAttribute("style", "height: " + 100 * (1 - Math.abs(lamediaA)) + "%; opacity: " + 100 * (1 - Math.abs(lamediaV)) + "%");
   div.setAttribute("id", "felice");
   cont.appendChild(div);
+
+	var divPlus = document.createElement("div");
+  divPlus.setAttribute("class", "squarePlus");
+  if (varpiufreq == 0) {
+    divPlus.setAttribute("id", "rabbia");
+  } else if (varpiufreq == 1) {
+    divPlus.setAttribute("id", "disgusto");
+  } else if (varpiufreq == 2) {
+    divPlus.setAttribute("id", "paura");
+  } else if (varpiufreq == 3) {
+    divPlus.setAttribute("id", "triste");
+  } else if (varpiufreq == 4) {
+    divPlus.setAttribute("id", "neutrale");
+  } else if (varpiufreq == 5) {
+    divPlus.setAttribute("id", "sorpreso");
+  } else if (varpiufreq == 6) {
+    divPlus.setAttribute("id", "felice");
+  }
+
+  contPlus.appendChild(divPlus);
+
   return;
 }
 
@@ -858,7 +1013,7 @@ setInterval(function() {
 
 }, 2000);
 
-/////////////////////////////////////////////////////// CONTROLS /////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////// CONTROLS ///////////////////////////////////////////////////////
 
 // nascondi controls
 var isShown;
@@ -892,7 +1047,7 @@ function nasconditutto() {
   }
 }
 
-/////////////////////////////////////////////////////// FINE ESPERIENZA /////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////// FINE ESPERIENZA ///////////////////////////////////////////////////////
 
 //tempo scaduto
 async function finito() {
@@ -913,7 +1068,7 @@ async function finito() {
   document.getElementById('closing').style.display = 'block';
 
   initMorphcast.then(({stop}) => stop());
-  capture();
+  final_open();
   return;
 }
 
@@ -934,6 +1089,22 @@ function capture() {
       a.click()
       canvas.remove()
     })
+
+    const captureElement2 = document.querySelector('#containerPlus')
+    html2canvas(captureElement2)
+    .then(canvas2 => {
+      canvas2.style.display = 'none'
+      document.body.appendChild(canvas2)
+      return canvas2
+    })
+    .then(canvas2 => {
+      const image2 = canvas2.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+      const a2 = document.createElement('a')
+      a2.setAttribute('download', usName + '-recap.png')
+      a2.setAttribute('href', image2)
+      a2.click()
+      canvas2.remove()
+    })
 }
 
 // final video
@@ -942,14 +1113,16 @@ function final_open() {
   window.scrollTo(0, 0);
   document.getElementById('light2').style.display = 'block';
   //document.getElementById('fade2').style.display = 'block';
-  //lightBoxVideo.play();
+  lightBoxVideo.play();
 }
 
 function final_close() {
   var lightBoxVideo = document.getElementById("finalvideo");
   document.getElementById('light2').style.display = 'none';
+  lightBoxVideo.pause();
+
+  capture();
   //document.getElementById('fade2').style.display = 'none';
-  //lightBoxVideo.pause();
 }
 
 //reload page
@@ -957,3 +1130,38 @@ function reload_page() {
   location.reload();
   return false;
 }
+
+
+function audioVolumeIn(q) {
+  if (q.volume) {
+    var InT = 0;
+    var setVolume = 1; // Target volume level for new song
+    var speed = 0.005; // Rate of increase
+    q.volume = InT;
+    var eAudio = setInterval(function() {
+      InT += speed;
+      q.volume = InT.toFixed(1);
+      if (InT.toFixed(1) >= setVolume) {
+        clearInterval(eAudio);
+        //alert('clearInterval eAudio'+ InT.toFixed(1));
+      };
+    }, 50);
+  };
+};
+
+function audioVolumeOut(q) {
+  if (q.volume) {
+    var InT = 0.4;
+    var setVolume = 0; // Target volume level for old song
+    var speed = 0.005; // Rate of volume decrease
+    q.volume = InT;
+    var fAudio = setInterval(function() {
+      InT -= speed;
+      q.volume = InT.toFixed(1);
+      if (InT.toFixed(1) <= setVolume) {
+        clearInterval(fAudio);
+        //alert('clearInterval fAudio'+ InT.toFixed(1));
+      };
+    }, 50);
+  };
+};
