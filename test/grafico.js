@@ -17,6 +17,7 @@ audio4 = $('#audio4').get(0);
 audio5 = $('#audio5').get(0);
 audio6 = $('#audio6').get(0);
 
+var audioinplay = null
 
 function apertura() {
   document.getElementById('opening').style.display = 'block';
@@ -150,11 +151,12 @@ function lightbox_close() {
 
   // set timer
   document.getElementById('timer').innerHTML =
-    01 + ":" + 00;
+    04 + ":" + 00;
   startTimer();
 
   // play music
   audioObj.play();
+	audioinplay = 'audioObj';
 }
 
 function startTimer() {
@@ -446,6 +448,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
     varpiufreq = mode(storicoEmozioni)
 
     console.log(storicoEmozioni, varpiufreq)
+		console.log(audioinplay)
 
     var larghezzaContainer = window.innerWidth * 0.4;
 
@@ -470,14 +473,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#FFF2CE00');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.play()
-            audio1.pause()
-            audio2.pause()
-            audio3.pause()
-            audio4.pause()
-            audio5.pause()
-            audio6.pause()
+            cambiaCanzone(audio0)
+						audioinplay = 'audio0';
           }
 
           linkFrame = 'leap/rabbia.html'
@@ -494,14 +491,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#4C86C100');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.play()
-            audio2.pause()
-            audio3.pause()
-            audio4.pause()
-            audio5.pause()
-            audio6.pause()
+            cambiaCanzone(audio1)
+						audioinplay = 'audio1';
           }
 
           linkFrame = 'leap/disgusto.html'
@@ -518,14 +509,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#C990EC00');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.pause()
-            audio2.play()
-            audio3.pause()
-            audio4.pause()
-            audio5.pause()
-            audio6.pause()
+            cambiaCanzone(audio2)
+						audioinplay = 'audio2';
           }
 
           linkFrame = 'leap/paura.html'
@@ -542,14 +527,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#8CC44400');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.pause()
-            audio2.pause()
-            audio3.play()
-            audio4.pause()
-            audio5.pause()
-            audio6.pause()
+            cambiaCanzone(audio3)
+						audioinplay = 'audio3';
           }
 
           linkFrame = 'leap/triste.html'
@@ -566,15 +545,9 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#FFA94100');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.pause()
-            audio2.pause()
-            audio3.pause()
-            audio4.play()
-            audio5.pause()
-            audio6.pause()
-          }
+            cambiaCanzone(audio4)
+						audioinplay = 'audio4';
+					}
 
           linkFrame = 'leap/neutrale.html'
           frameSettings();
@@ -593,14 +566,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#2acad600');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.pause()
-            audio2.pause()
-            audio3.pause()
-            audio4.pause()
-            audio5.play()
-            audio6.pause()
+            cambiaCanzone(audio5)
+						audioinplay = 'audio5';
           }
 
           linkFrame = 'leap/sorpreso.html'
@@ -617,14 +584,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-2', '#ffe80000');
 
 					if (document.getElementById('light').style.display == 'none') {
-            audioObj.pause()
-            audio0.pause()
-            audio1.pause()
-            audio2.pause()
-            audio3.pause()
-            audio4.pause()
-            audio5.pause()
-            audio6.play()
+            cambiaCanzone(audio6)
+						audioinplay = 'audio6';
           }
 
           linkFrame = 'leap/felice.html'
@@ -635,6 +596,67 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
       }
 
       oldVar = testVariable;
+    }
+
+		function delay(time) {
+		  return new Promise(resolve => setTimeout(resolve, time));
+		}
+
+
+    function cambiaCanzone(songToPlay) {
+
+      if (audioinplay == 'audioObj') {
+        $('#audioObj').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audioObj.pause();
+        });
+
+      } else if (audioinplay == 'audio0') {
+        $('#audio0').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio0.pause();
+        });
+      } else if (audioinplay == 'audio1') {
+        $('#audio1').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio1.pause();
+        });
+      } else if (audioinplay == 'audio2') {
+        $('#audio2').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio2.pause();
+        });
+      } else if (audioinplay == 'audio3') {
+        $('#audio3').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio3.pause();
+        });
+      } else if (audioinplay == 'audio4') {
+        $('#audio4').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio4.pause();
+        });
+      } else if (audioinplay == 'audio5') {
+        $('#audio5').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio5.pause();
+        });
+      } else if (audioinplay == 'audio6') {
+        $('#audio6').animate({
+          volume: 0.0
+        }, 3000, function() {
+          audio6.pause();
+        });
+      }
+
+      delay(3000).then(() => songToPlay.play());
     }
 
     //fare check delle ultime 10 misurazioni e vedere qual è il valore preponderante
@@ -949,7 +971,7 @@ async function stimolaNeutrale() {
 async function continuaFelice() {
 
   if (isConnectted) {
-    await writer.write(enc.encode(`0-0-0@`)); //rainbow
+    await writer.write(enc.encode(`105-255-40@`)); //rainbow
     return;
   }
 }
