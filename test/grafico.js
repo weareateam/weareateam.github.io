@@ -1,3 +1,11 @@
+var mattia = document.getElementById('startingVideo');
+mattia.addEventListener("timeupdate", myfunc,false);
+
+function myfunc(){
+	if(this.currentTime > this.duration-5)
+      document.getElementById('buttonazzo').style.display = 'block';
+	}
+
 /////////////////////////////////////////////////////// INIZIO ESPERIENZA /////////////////////////////////////////////////////// 
 
 audioObj = new Audio("media/base.m4a");
@@ -105,6 +113,7 @@ function lightbox_firstClose() {
   document.getElementById('fadeInit').style.display = 'none';
   lightBoxVideo.pause();
   lightbox_open();
+  document.body.style.cursor = 'none';
 }
 
 // VIDEO INTRO MOVEL
@@ -279,7 +288,7 @@ var graficoEmo = new Chart('chart', {
 
 // I FRAME
 
-var linkFrame = "https://pointerpointer.com/";
+var linkFrame = "leap";
 var ifrm;
 
 function prepareFrame() {
@@ -319,11 +328,13 @@ const config2 = {
   smoothness: 0.70
 };
 
+
 var initMorphcast = new Promise((res) => {
   res(CY.loader()
     .licenseKey("2d18af0251f04bb109bfd324ca885f139c57ff54374d")
     // .addModule(CY.modules().FACE_AGE.name)
     // .addModule(CY.modules().FACE_GENDER.name)
+
     .addModule(CY.modules().FACE_EMOTION.name)
     .addModule(CY.modules().DATA_AGGREGATOR.name, config)
 
@@ -445,7 +456,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'https://pointerpointer.com/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -470,7 +481,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'http://eelslap.com/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -495,7 +506,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'https://jacksonpollock.org/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -520,7 +531,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'https://cat-bounce.com/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -545,7 +556,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.play();
           audio5.pause();
           audio6.pause();
-          linkFrame = 'http://www.staggeringbeauty.com/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -573,7 +584,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.play();
           audio6.pause();
-          linkFrame = 'http://www.muchbetterthanthis.com/'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -598,7 +609,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           audio4.pause();
           audio5.pause();
           audio6.play();
-          linkFrame = 'figo'
+          linkFrame = 'leap'
           frameSettings();
 
           var div = document.createElement("div");
@@ -858,10 +869,12 @@ window.document.onkeydown = function(e) {
   if (e.keyCode == 81) {
     if(isShown == false){
       document.getElementById('upbar').style.display = 'block';
+      document.body.style.cursor = 'default';
       isShown = true;
 
     }else{
       document.getElementById('upbar').style.display = 'none';
+      document.body.style.cursor = 'none';
       isShown = false;
     }
   }
@@ -885,6 +898,8 @@ function nasconditutto() {
 async function finito() {
   document.getElementById('schemi').style.display = 'block';
   console.log('TEMPO SCADUTO');
+
+  document.body.style.cursor = 'default';
 
   audioObj.pause();
   audio0.pause();
