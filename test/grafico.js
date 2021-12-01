@@ -151,7 +151,7 @@ function lightbox_close() {
 
   // set timer
   document.getElementById('timer').innerHTML =
-    03 + ":" + 00;
+    02 + ":" + 00;
   startTimer();
 
   // play music
@@ -417,7 +417,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
     storicoEmozioni.push(index)
 
-    if (storicoEmozioni.length > 15)
+    if (storicoEmozioni.length > 9)
       storicoEmozioni.shift();
 
     const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -477,6 +477,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 						audioinplay = 'audio0';
           }
 
+          //linkFrame = 'http://www.muchbetterthanthis.com/'
           linkFrame = 'leap/rabbia.html'
           frameSettings();
 
@@ -549,7 +550,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 						audioinplay = 'audio4';
 					}
 
-          linkFrame = 'leap/neutrale.html'
+          linkFrame = 'https://puginarug.com//neutrale.html'
           frameSettings();
 
           setTimeout(function() {
