@@ -550,7 +550,8 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 						audioinplay = 'audio4';
 					}
 
-          linkFrame = 'https://puginarug.com//neutrale.html'
+          //linkFrame = 'https://puginarug.com//'
+          linkFrame = 'leap/felice.html'
           frameSettings();
 
           setTimeout(function() {
@@ -964,7 +965,7 @@ async function adjTriste() {
 
 async function stimolaNeutrale() {
   if (isConnectted) {
-    await writer.write(enc.encode(`225-105-20@`)); //orange
+    await writer.write(enc.encode(`255-0-0@`)); //orange
     return;
   }
 }
