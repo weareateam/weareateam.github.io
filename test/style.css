@@ -261,7 +261,7 @@ section {
   width: 100%;
   height: 100%;
   background-color: #000000;
-  padding-top: 15%;
+  padding-top: 5%;
 }
 
 #noFace{
@@ -390,4 +390,67 @@ input:focus ~ .highlight {
 
 .section:nth-child(even) .slide:nth-child(even) {
   background-color: #e74c3c;
+}
+
+/* WAVE ================ */
+
+.sound-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sound-wave {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.sound-wave .wavebar {
+  display: block;
+  width: 2px;
+  margin-right: 1px;
+  height: 90px;
+  background: #ffffff;
+  animation: sound 0ms -800ms linear infinite alternate;
+  transition: height 0.8s;
+}
+
+@keyframes sound {
+  0% {
+    opacity: 0.35;
+    height: 6px;
+  }
+  100% {
+    opacity: 1;
+    height: 46px;
+  }
+}
+
+.wavebar:nth-child(1) { height: 2px; animation-duration: 474ms; }
+.wavebar:nth-child(2) { height: 10px; animation-duration: 433ms; }
+.wavebar:nth-child(3) { height: 18px; animation-duration: 407ms; }
+.wavebar:nth-child(4) { height: 26px; animation-duration: 458ms; }
+.wavebar:nth-child(5) { height: 30px; animation-duration: 400ms; }
+.wavebar:nth-child(6) { height: 32px; animation-duration: 427ms; }
+.wavebar:nth-child(7) { height: 34px; animation-duration: 441ms; }
+.wavebar:nth-child(8) { height: 36px; animation-duration: 419ms; }
+.wavebar:nth-child(9) { height: 40px; animation-duration: 487ms; }
+.wavebar:nth-child(10) { height: 46px; animation-duration: 442ms; }
+.wavebar:nth-child(11) { height: 2px; animation-duration: 474ms; }
+.wavebar:nth-child(12) { height: 10px; animation-duration: 433ms; }
+.wavebar:nth-child(13) { height: 18px; animation-duration: 407ms; }
+.wavebar:nth-child(14) { height: 26px; animation-duration: 458ms; }
+.wavebar:nth-child(15) { height: 30px; animation-duration: 400ms; }
+.wavebar:nth-child(16) { height: 32px; animation-duration: 427ms; }
+.wavebar:nth-child(17) { height: 34px; animation-duration: 441ms; }
+.wavebar:nth-child(18) { height: 36px; animation-duration: 419ms; }
+.wavebar:nth-child(19) { height: 40px; animation-duration: 487ms; }
+.wavebar:nth-child(20) { height: 46px; animation-duration: 442ms; }
+
+.sound-icon:hover .wavebar {
+  height: 2px;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
 }
