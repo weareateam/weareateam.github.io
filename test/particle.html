@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta charset="UTF-8">
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+
+  <title>Movel | MVP</title>
+</head>
+
+<body style="background-color:black;">
+    <canvas class="background"></canvas>
+</body>
+
+<style>
+.background {
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: auto;
+}
+</style>
+
+<script>
+    window.onload = function () {
+  Particles.init({
+    selector: ".background"
+  });
+};
+var particles = Particles.init({
+  selector: ".background",
+  color: ["#03dac6", "#ff0266", "#000000"],
+  connectParticles: true,
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        color: ["#faebd7", "#03dac6", "#ff0266"],
+        maxParticles: 43,
+        connectParticles: false
+      }
+    }
+  ]
+});
+
+</script>
+
+</html>

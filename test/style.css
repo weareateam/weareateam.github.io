@@ -3,6 +3,12 @@ html, body {
   padding: 0;
 
 }
+
+@font-face {
+  font-family: myFont;
+  src: url(fonts/Larsseit.woff);
+}
+
 canvas {
   display: block;
 }
@@ -23,7 +29,7 @@ canvas {
 }
 
 body {
-font-family: 'Poppins', sans-serif;
+font-family: myFont;
 background-color: #000000;
 }
 
@@ -201,67 +207,85 @@ section {
 #felice {background-color: #10812d;}
 #loadingcolor {background-color: #000000;}
 
+#upbar{
+  display:inline-block; 
+  position: absolute;
+  width: 40vw;
+  height: 50vh;
+  left: 30vw;
+  top: 15vh;
+  background-color: #00000080;
+}
+
+.timeTitle{
+  color: white; 
+  mix-blend-mode: exclusion; 
+  margin: 0; 
+  padding-top: 3vh; 
+  padding-bottom: 4vh; 
+  font-size: 5vh; 
+  text-align: center;
+}
+
 #containerPlus {
-  height: 10px;
-  width: 40%;
-  background: #b6b6b6;
+  height: 1vh;
+  width: 100%;
+  background: #dddddd;
   display: inline-block;
   position: absolute;
-  bottom: 0;
-  margin-left: 5%;
-  float: left;
   padding: 0;
-  margin-bottom: 40px;
+  bottom:0;
 }
 
 #container {
-  height: 100px;
-  width: 40%;
+  height: 10vh;
+  width: 100%;
   background: white;
   display: inline-block;
   position: absolute;
-  bottom: 0;
-  margin-left: 5%;
-  float: left;
   padding: 0;
-  margin-bottom: 50px;
+  margin-bottom: 1vh;
+  bottom:0;
 }
 
 .chart-container {
-  width: 40%;
+  width: 100%;
   margin-top: 50px;
   display: inline-block;
-  margin-right: 5%;
-  float: right;
   padding: 0;
 }
 
-.schemi{
-  position: absolute;
-  width: 100%;
-  bottom: 0px;
-  padding-bottom: 40px;
-  background-color: #000000ee;
-}
-
-.NOW{
-  position: absolute;
-  top: 25px;
-  right: 5%;
-}
-
 .precise{
+  display: inline-block;
+  width: 100%;
+  color: white;
+  mix-blend-mode: exclusion;
   position: absolute;
-  bottom: 175px;
-  left: 5%;
+  margin: 0;
+  font-size: 1.25vh;
+  text-align: left;
+  font-style: italic;
+  margin-left: 2vw;
+  bottom: 12vh;
+}
+
+.precise span{
+  margin-top: 0.5vh;
+  font-size: 2vh;
+  font-style: normal;
 }
 
 .opening{
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #000000;
-  padding-top: 5%;
+}
+
+.centralo{
+ width: 100vw;
+ margin: 0 auto;
+ padding-top: 30vh;
+ height: 60vh;
 }
 
 #noFace{
@@ -280,17 +304,21 @@ section {
 }
 
 /* form starting stylings ------------------------------- */
-input 				{
+input{
   font-size:18px;
   padding:10px 10px 10px 5px;
   display:block;
   width:300px;
   border:none;
   border-bottom:1px solid #757575;
-  background-color:#000; 
+  background-color:#0000; 
   color: #FFF;
 }
-input:focus 		{ outline:none; }
+input:focus{ outline:none; }
+
+input[type="submit"]:hover {
+  border-bottom: 2px solid white;
+}
 
 /* LABEL ======================================= */
 label 				 {

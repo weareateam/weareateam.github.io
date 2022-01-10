@@ -19,6 +19,8 @@ audio6 = $('#audio6').get(0);
 
 var audioinplay = null
 
+var coloreParticelle = document.getElementById('particelle');
+
 function apertura() {
   document.getElementById('opening').style.display = 'block';
 }
@@ -30,92 +32,20 @@ function lightbox_first() {
   usName = document.getElementById("userName").value;
   initMorphcast.then(({start}) => start());
 
-  if(usName.length !== 0){
-    console.log(usName);
-    var lightBoxVideo = document.getElementById("startingVideo");
-    window.scrollTo(0, 0);
-
-    var nowIsTime;
-    var Scelta;
-    getRandomInt();
-
-    function getRandomInt(min, max) {
-      var min = 1;
-      var max = 4;
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Scelta = Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-    }
-
-    if(Scelta == 1){
-      nowIsTime = "cry";
-      var video = document.getElementById('startingVideo');
-      var source = document.createElement('source');
-      source.setAttribute('src', 'media/randomvideo/Sad.mp4');
-      source.setAttribute('type', 'video/mp4');
-
-      video.appendChild(source);
-      video.play();
-      video.controls = false;
-
-    } else if(Scelta == 2){
-      nowIsTime = "smile";
-      var video = document.getElementById('startingVideo');
-      var source = document.createElement('source');
-      source.setAttribute('src', 'media/randomvideo/Happy.mp4');
-      source.setAttribute('type', 'video/mp4');
-
-      video.appendChild(source);
-      video.play();
-      video.controls = false;
-
-    } else if(Scelta == 3){
-      nowIsTime = "upset";
-      var video = document.getElementById('startingVideo');
-      var source = document.createElement('source');
-      source.setAttribute('src', 'media/randomvideo/Disgust.mp4');
-      source.setAttribute('type', 'video/mp4');
-
-      video.appendChild(source);
-      video.play();
-      video.controls = false;
-    }
-
-    document.getElementById("isTimeTo").innerHTML = "now we will make you " + nowIsTime;
-
-    document.getElementById('opening').style.display = 'none';
-    document.getElementById('fadeInit').style.display = 'block';
-    setTimeout(function() {
-
-      document.getElementById('lightInit').style.display = 'block';
-
-      var opacity = 0;
-      MyFadeFunction();
-      function MyFadeFunction() {
-         if (opacity < 1) {
-            opacity += .1;
-            setTimeout(function(){MyFadeFunction()},100);
-         }
-         document.getElementById('lightInit').style.opacity = opacity;
-      }
-
-    }, 3000);
-    lightBoxVideo.play();
-
-    return;
-
-  } else {
-    alert('Insert a name please');
+  if(usName.length == 0){
+    usName = "UnknowUser";
   }
-}
 
-function lightbox_firstClose() {
-  var lightBoxVideo = document.getElementById("startingVideo");
-  document.getElementById('lightInit').style.display = 'none';
-  document.getElementById('fadeInit').style.display = 'none';
-  lightBoxVideo.pause();
-  lightbox_open();
-  document.body.style.cursor = 'none';
+  var checkBox = document.getElementById("check");
+
+  if (checkBox.checked == true){
+    lightbox_close();
+  } else {
+    lightbox_open();
+  }
+
+  document.getElementById('opening').style.display = 'none';
+  document.getElementById('contenitore').style.display = 'block';
 }
 
 // VIDEO INTRO MOVEL
@@ -123,7 +53,6 @@ function lightbox_open() {
   var lightBoxVideo = document.getElementById("VisaChipCardVideo");
   window.scrollTo(0, 0);
   document.getElementById('fade').style.display = 'block';
-  document.getElementById('opening').style.display = 'none';
 
   document.getElementById('light').style.display = 'block';
 
@@ -143,61 +72,69 @@ function lightbox_open() {
 
 function lightbox_close() {
   var lightBoxVideo = document.getElementById("VisaChipCardVideo");
-  document.getElementById('schemi').style.display = 'none';
   document.getElementById('light').style.display = 'none';
   document.getElementById('fade').style.display = 'none';
-  lightBoxVideo.pause();
-  prepareFrame();
+  //lightBoxVideo.pause();
+  //prepareFrame();
 
   // set timer
   document.getElementById('timer').innerHTML =
-    02 + ":" + 00;
-  startTimer();
+    00 + ":" + 00;
+  //startTimer();
+  chronoStart();
 
   // play music
   audioObj.play();
 	audioinplay = 'audioObj';
 }
 
-function startTimer() {
-  var presentTime = document.getElementById('timer').innerHTML;
-  var timeArray = presentTime.split(/[:]+/);
-  var m = timeArray[0];
-  var s = checkSecond((timeArray[1] - 1));
-  if (s == 59) {
-    m = m - 1
-  }
-  if (m < 0) {
-    return
-  }
+var startTime = 0
+var start = 0
+var end = 0
+var diff = 0
+var timerID = 0
 
-  document.getElementById('timer').innerHTML =
-    m + ":" + s;
-  setTimeout(startTimer, 1000);
-
-  // when the timer stops
-  if (m == 0) {
-    if (s == 10) {
-      fadeAll();
-    }
-    if (s == 5) {
-      partiCountdown();
-      fadeBg();
-    }
-    if (s == 0) {
-      finito();
-    }
-  }
+function chrono(){
+	end = new Date()
+	diff = end - start
+	diff = new Date(diff)
+	var msec = diff.getMilliseconds()
+	var sec = diff.getSeconds()
+	var min = diff.getMinutes()
+	var hr = diff.getHours()-1
+	if (min < 10){
+		min = "0" + min
+	}
+	if (sec < 10){
+		sec = "0" + sec
+	}
+	if(msec < 10){
+		msec = "00" +msec
+	}
+	else if(msec < 100){
+		msec = "0" +msec
+	}
+  document.getElementById("timer").innerHTML = hr + ":" + min + ":" + sec;
+	timerID = setTimeout("chrono()", 10)
 }
-
-function checkSecond(sec) {
-  if (sec < 10 && sec >= 0) {
-    sec = "0" + sec
-  }; // add zero in front of numbers < 10
-  if (sec < 0) {
-    sec = "59"
-  };
-  return sec;
+function chronoStart(){
+	start = new Date()
+	chrono()
+}
+function chronoContinue(){
+	start = new Date()-diff
+	start = new Date(start)
+	chrono()
+}
+function chronoReset(){
+  document.getElementById("timer").innerHTML = "0:00:00";
+	start = new Date()
+}
+function chronoStopReset(){
+  document.getElementById("timer").innerHTML = "0:00:00"
+}
+function chronoStop(){
+	clearTimeout(timerID)
 }
 
 // fade all
@@ -291,39 +228,25 @@ var graficoEmo = new Chart('chart', {
 
 // I FRAME
 
-var linkFrame = "leap/rabbia.html";
+var linkFrame = "https://www.facebook.com/";
 var ifrm;
 
 function prepareFrame() {
   ifrm = document.createElement("iframe");
   ifrm.id = "divertimento";
-  ifrm.style.width = "80vw";
-  ifrm.style.height = "44vw";
+  ifrm.style.width = "90vw";
+  ifrm.style.height = "90vh";
   ifrm.style.display = "none";
   ifrm.style.position = "absolute";
-  ifrm.style.left = "10vw";
-  ifrm.style.top = "14vh";
+  ifrm.style.left = "5vw";
+  ifrm.style.top = "5vh";
   ifrm.style.border = "none";
   ifrm.style.backgroundColor = "black";
   document.body.appendChild(ifrm);
 
   frameSettings();
 
-  setTimeout(function() {
-
-    document.getElementById('divertimento').style.display = 'block';
-
-    var opacity = 0;
-    MyFadeFunction();
-    function MyFadeFunction() {
-       if (opacity < 1) {
-          opacity += .1;
-          setTimeout(function(){MyFadeFunction()},100);
-       }
-       document.getElementById('divertimento').style.opacity = opacity;
-    }
-
-  }, 3000);
+  document.getElementById('divertimento').style.display = 'block';
 
 }
 
@@ -450,11 +373,11 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
     console.log(storicoEmozioni, varpiufreq)
 		console.log(audioinplay)
 
-    var larghezzaContainer = window.innerWidth * 0.4;
+    var larghezzaContainer = 100;
 
-    $(".square").css("width", larghezzaContainer / checker + "px")
+    $(".square").css("width", larghezzaContainer / checker + "%")
 
-    $(".squarePlus").css("width", larghezzaContainer / checker + "px")
+    $(".squarePlus").css("width", larghezzaContainer / checker + "%")
 
 // EMOZIONI MEDIE
 
@@ -472,14 +395,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#FFF2CE');
           r.style.setProperty('--color-2', '#FFF2CE00');
 
+          coloreParticelle.src = "particelle/rabbia.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio0)
 						audioinplay = 'audio0';
           }
-
-          //linkFrame = 'http://www.muchbetterthanthis.com/'
-          linkFrame = 'leap/rabbia.html'
-          frameSettings();
 
           adjArrabbiato();
 
@@ -491,13 +412,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#4C86C1');
           r.style.setProperty('--color-2', '#4C86C100');
 
+          coloreParticelle.src = "particelle/disgusto.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio1)
 						audioinplay = 'audio1';
           }
-
-          linkFrame = 'leap/disgusto.html'
-          frameSettings();
 
           adjDisgusto();
 
@@ -509,13 +429,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#C990EC');
           r.style.setProperty('--color-2', '#C990EC00');
 
+          coloreParticelle.src = "particelle/paura.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio2)
 						audioinplay = 'audio2';
           }
-
-          linkFrame = 'leap/paura.html'
-          frameSettings();
 
           adjPaura();
 
@@ -527,13 +446,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#8CC444');
           r.style.setProperty('--color-2', '#8CC44400');
 
+          coloreParticelle.src = "particelle/triste.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio3)
 						audioinplay = 'audio3';
           }
-
-          linkFrame = 'leap/triste.html'
-          frameSettings();
 
           adjTriste();
 
@@ -545,14 +463,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#FFA941');
           r.style.setProperty('--color-2', '#FFA94100');
 
+          coloreParticelle.src = "particelle/neutrale.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio4)
 						audioinplay = 'audio4';
 					}
-
-          //linkFrame = 'https://puginarug.com//'
-          linkFrame = 'leap/felice.html'
-          frameSettings();
 
           setTimeout(function() {
             console.log("neutrale per troppo tempo")
@@ -567,13 +483,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#2acbd6');
           r.style.setProperty('--color-2', '#2acad600');
 
+          coloreParticelle.src = "particelle/sorpreso.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio5)
 						audioinplay = 'audio5';
           }
-
-          linkFrame = 'leap/sorpreso.html'
-          frameSettings();
 
         } else if (varpiufreq == 6) {
           ragazzi = ragazzi + 1;
@@ -585,13 +500,12 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
           r.style.setProperty('--color-1', '#ffe800');
           r.style.setProperty('--color-2', '#ffe80000');
 
+          coloreParticelle.src = "particelle/felice.html";
+
 					if (document.getElementById('light').style.display == 'none') {
             cambiaCanzone(audio6)
 						audioinplay = 'audio6';
           }
-
-          linkFrame = 'leap/felice.html'
-          frameSettings();
 
           continuaFelice();
         }
@@ -1189,3 +1103,27 @@ function audioVolumeOut(q) {
     }, 50);
   };
 };
+
+window.onbeforeunload = function (e) {
+
+  var e = e || window.event;
+
+  //IE & Firefox
+  if (e) {
+    e.returnValue = 'Are you sure?';
+  }
+
+  // For Safari
+  return 'Are you sure?';
+};
+
+window.document.onkeydown = function(f) {
+  if (!f) {
+    f = event;
+  }
+  if (f.keyCode == 70) {
+      var ciao = document.getElementById('particelle');
+      ciao.src = "particelle/rabbia.html";
+      console.log(ciao);
+  }
+}

@@ -24,48 +24,34 @@
 <!-- SCHERMATA INIZIALE -->
 
 <div class="opening" id="opening" style="z-index: 5;">
- <h1 style="color: #FFF; text-align: center;"> Welcome </h1>
- <h4 style="color: #FFF; text-align: center;"> Tell us who you are and where you are ready hit play </h4>
+  <div class="centralo">
+    <h1 style="color: #FFF; text-align: center; margin:0;"> Movel Demo</h1>
+    <h4 style="color: #FFF; text-align: center;"> Tell us who you are and hit play </h4>
 
- <div class="iltuonome">
-    <form onsubmit="return false;">
-      <div style = "position:relative; margin-bottom:45px;">
-        <input id="userName" type="text" required />
-        <span class="highlight"></span>
-        <span class="bar"></span>
-        <label>Your Name</label>
+      <div class="iltuonome">
+        <form onsubmit="return false;">
+          <div style = "position:relative; margin-bottom:15px;">
+            <input id="userName" type="text" required />
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Your Name</label>
+          </div>
+
+          <div style="width: 100%; margin-bottom:45px;">
+            <input style="width: 50px; display: inline-block;" type="checkbox" id="check" name="check" value="Bike">
+            <label for="check"> Skip the tutorial</label>
+            <p style="color: #FFF; text-align: center; display: inline-block;"> Skip tutorial </p>
+          </div>
+
+          <input type="submit" value="Start" onclick="lightbox_first();" />
+        </form>
+
       </div>
-
-      <input type="submit" value="Start" onclick="lightbox_first();" />
-    </form>
-
-    <div class='sound-icon disabled' style="padding-top: 20%;">
-      <div class='sound-wave'>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-        <i class='wavebar'></i>
-      </div>
-    </div>
-    
   </div>
+
 </div>
+
+<iframe id="particelle" src="particelle/start.html" title="particelle" style="position: absolute; width: 100%; height: 100%; top:0; z-index: -1; border-width: 0px;"></iframe>
 
 <!-- POPUP VIDEO -->
 <div id="lightInit">
@@ -73,15 +59,6 @@
   <video id="startingVideo" width="1200" controls>
     <!--Browser does not support <video> tag -->
   </video>
-
-  <!--
-  <script>/*<![CDATA[*/
-    document.getElementById('startingVideo').addEventListener('ended',function(){
-      lightbox_firstClose();
-    }, false);
-  /*]]>*/</script>
-  -->
-
 </div>
 
 <div id="fadeInit" onClick="lightbox_firstClose();">
@@ -107,92 +84,55 @@
 
 <!-- ALERT NO FACCIA -->
 <h2 id="noFace" style="position: absolute; left: 50vw; top: 7vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white; z-index: 1001 !important;">FACE NOT DETECTED</h2>
-<h4 style="position: absolute; left: 50vw; bottom: 10vh; transform: translate(-50%, -50%); mix-blend-mode: exclusion; color: white; display: none;">your emotion now</h4>
-<h3 id="preciso" style="position: absolute; left: 50vw; bottom: 7vh; transform: translate(-50%, -50%); mix-blend-mode: exclusion; color: white; display: none;">emotion</h3>
 
 <!-- BODY -->
-<div class="contenitore">
+<div class="contenitore" id="contenitore" style="display: none;">
 
-  <div id="upbar" style="display: none;">
+  <div class ="precise">
+    <h3>average mood <br><span id="emozioneMedia">loading</span></h3>
+    <h3>precise emotion <br><span id="preciso">loading</span></h3>
+    <h3>generic emotion <br><span id="emotion">loading</span></h3>
+    <h3>arousal level <br><span id="ar">?</span></h3>
+    <h3>valence level <br><span id="va">?</span></h3>
+  </div>
+  
+  <div id="upbar">
+    
     <!-- CONTROLLI -->
-    <section id="controls">
-      <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 15px;">
+      <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 1vw; display: none;">
         <i class="fa fa-usb" aria-hidden="true"></i>
       </button>
-      <button onclick="nasconditutto()" style="margin-right: 15px;">
-        <i class="fa fa-eye" aria-hidden="true"></i>
-      </button>
-      <button onclick="lightbox_open()" style="margin-right: 15px;">
-        <i class="fa fa-play-circle" aria-hidden="true"></i>
-      </button>
-    </section>
 
     <!-- TIME -->
-    <h2 style=" background-color:#000; color:#FFF; text-align:center; margin: 0; padding-top: 25px; padding-bottom: 25px; ">time <span id="timer"></span></h2>
+    <p class="timeTitle"><span id="timer"></span></p>
 
     <!-- EMOZIONI -->
-    <div class ="NOW">
-      <h3 style="color: white; mix-blend-mode: exclusion; text-align:center; margin: 0;">mood <span id="emozioneMedia">loading</span></h3>
-      <audio id="audioObj" src="media/base.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio0" src="media/triste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio1" src="media/audio.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio2" src="media/noFear.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio3" src="media/noTriste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio4" src="media/noNeutral.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio5" src="media/piuSorpreso.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-      <audio id="audio6" src="media/piuHappy.m4a" loop></audio>
-    </div>
+  
+    <audio id="audioObj" src="media/base.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio0" src="media/triste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio1" src="media/audio.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio2" src="media/noFear.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio3" src="media/noTriste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio4" src="media/noNeutral.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio5" src="media/piuSorpreso.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+    <audio id="audio6" src="media/piuHappy.m4a" loop></audio>
+  </div>
+
+  <div style="position: absolute; bottom: 12vh; right:2vw;">
+    <input type="submit" style="width:20vw;" value="Capture" onclick="capture();" />
   </div>
 
   <!-- GRAFICI -->
-  <div class="schemi" id="schemi" style="z-index: 3;display:block">
-    <div class ="precise">
-      <h3 id="preciso" style="color: white; text-align:left; margin: 0; display:inline-block; width: 175px;">loading</h3>
-      <h3 id="ar" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
-      <h3 id="va" style="color: white; text-align:left; margin: 0; display:inline-block; width: 100px;">?</h3>
-      <h3 style="color: white; text-align:left; margin: 0; display:inline-block; width: 225px;">now <span id="emotion"></span></h3>
-    </div>
+  <div id="schemi" style="display:inline-block;">
     <div id="container"></div>
     <div id="containerPlus"></div>
-    <div class="chart-container"><canvas id="chart" style="height: 160px;"></canvas></div>
-  </div>
-
-<!-- COUNTDOWN -->
-<h1 id="countdownFinale" style="display:none; font-size:150px; position: absolute; left: 50vw; top: 38vh; transform: translate(-50%, -50%); mix-blend-mode: exclusion; color: white; z-index: 15;">5</h1>
-
-  <!-- SCHERMATA FINALE -->
-<div class="opening" id="closing" style="z-index: 16 !important; display: none;">
-  <h1 style="color: #FFF; text-align: center;"> Thank You </h1>
-  <h4 style="color: #FFF; text-align: center;"> The experience is over </h4>
-
-  <div class="iltuonome">
-    <form onsubmit="return false;">
-      <input type="submit" value="Watch the Conclusion" onclick="final_open();" />
-      <input type="submit" value="Reload Experience" onclick="reload_page();" />
-    </form>
+    <div class="chart-container"><canvas id="chart" style="height: 160px; display: none;"></canvas></div>
   </div>
 
 </div>
 
-<!-- FINAL VIDEO -->
-
-<div id="light2">
-  <a class="boxclose" onclick="final_close();"></a>
-  <video id="finalvideo" width="1200" controls>
-    <source src="media/out.mov" type="video/mp4">
-    <!--Browser does not support <video> tag -->
-  </video>
-
-  <script>/*<![CDATA[*/
-    document.getElementById('finalvideo').addEventListener('ended',function(){
-      final_close();
-    }, false);
-  /*]]>*/</script>
-
-</div>
-
-<!-- BG EFFECT -->
-  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw; left:0%;">
+<!-- BG EFFECT
+  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw; height:100vh; left:0%;">
     <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
       <defs>
         <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
@@ -229,7 +169,8 @@
       </rect>
     </svg>
   </div>
-
+  -->
+  
   <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
   <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
 

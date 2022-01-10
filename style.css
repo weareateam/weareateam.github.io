@@ -15,8 +15,7 @@ body {
   width: 100%;
   font-family: 'Poppins', sans-serif;
   font-size: 60px;
-  background: #141414;
-  color: #000000;
+  color: #ffffff;
   overflow:hidden;
 }
 
@@ -43,7 +42,7 @@ body {
 
 .bottoneBg {
   position:absolute;
-  left:44%;
+  left:48%;
   top:75%;
   flex-direction: column;
   align-items: center;
