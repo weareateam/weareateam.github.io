@@ -51,6 +51,27 @@ section {
   margin: 0 auto;
 }
 
+.assistant {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 400px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#assistantIntro {
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
 #fade {
   display: none;
   position: fixed;
@@ -208,22 +229,23 @@ section {
 #loadingcolor {background-color: #000000;}
 
 #upbar{
-  display:inline-block; 
   position: absolute;
-  width: 40vw;
+  width: 96vw;
   height: 50vh;
-  left: 30vw;
-  top: 15vh;
-  background-color: #00000080;
+  left: 2vw;
+  top: 12vh;
+  background-color: transparent;
 }
 
 .timeTitle{
-  color: white; 
-  mix-blend-mode: exclusion; 
-  margin: 0; 
-  padding-top: 3vh; 
-  padding-bottom: 4vh; 
-  font-size: 5vh; 
+  display: inline-block;
+  color: white;
+  mix-blend-mode: exclusion;
+  float: right;
+  margin: 0;
+  /* padding-top: 3vh; */
+  /* padding-bottom: 4vh; */
+  font-size: 5vh;
   text-align: center;
 }
 
@@ -297,8 +319,8 @@ section {
 * { box-sizing:border-box; }
 
 .iltuonome{
-  width:600px; 
-  margin:100px auto 0; 
+  width:600px;
+  margin:100px auto 0;
   display:block;
   padding:10px 150px 50px;
 }
@@ -311,7 +333,7 @@ input{
   width:300px;
   border:none;
   border-bottom:1px solid #757575;
-  background-color:#0000; 
+  background-color:#0000;
   color: #FFF;
 }
 input:focus{ outline:none; }
@@ -322,15 +344,15 @@ input[type="submit"]:hover {
 
 /* LABEL ======================================= */
 label 				 {
-  color:#FFF; 
+  color:#FFF;
   font-size:18px;
   font-weight:normal;
   position:absolute;
   pointer-events:none;
   left:5px;
   top:10px;
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
   -webkit-transition:0.2s ease all;
 }
 
@@ -345,20 +367,20 @@ input:focus ~ label, input:valid ~ label{
 .bar 	{ position:relative; display:block; width:300px; }
 .bar:before, .bar:after 	{
   content:'';
-  height:2px; 
+  height:2px;
   width:0;
-  bottom:1px; 
+  bottom:1px;
   position:absolute;
-  background:#FFF; 
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
+  background:#FFF;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
   -webkit-transition:0.2s ease all;
 }
 .bar:before {
   left:50%;
 }
 .bar:after {
-  right:50%; 
+  right:50%;
 }
 
 /* active state */
@@ -369,9 +391,9 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 /* HIGHLIGHTER ================================== */
 .highlight {
   position:absolute;
-  height:60%; 
-  width:100px; 
-  top:25%; 
+  height:60%;
+  width:100px;
+  top:25%;
   left:0;
   pointer-events:none;
   opacity:0.5;

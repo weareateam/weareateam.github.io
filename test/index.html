@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.7/jquery.fullPage.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.7/jquery.fullPage.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leapjs/0.6.1/leap.js"></script>
-  <script src="myLeap.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leapjs/0.6.1/leap.js"></script> -->
+  <!-- <script src="myLeap.js"></script> -->
 
   <title>Movel | MVP</title>
 </head>
@@ -86,20 +86,47 @@
 <h2 id="noFace" style="position: absolute; left: 50vw; top: 7vh; transform: translate(-50%, -50%); display: none; mix-blend-mode: exclusion; color: white; z-index: 1001 !important;">FACE NOT DETECTED</h2>
 
 <!-- BODY -->
+
+<style media="screen">
+
+  .precise h3 {
+    display: inline-block;
+    width: calc(100% / 5.2);
+    text-align: center;
+  }
+
+  .iconApp img:hover {
+    transform: translateY(-10px);
+    transition: 0.2s all;
+    cursor: pointer;
+  }
+</style>
+
+
 <div class="contenitore" id="contenitore" style="display: none;">
 
-  <div class ="precise">
+  <div class="iconApp" style="display: block; position: absolute; top: 50vh; left: 50vw; transform: translate(-50%, -50%)">
+    <img src="media/ico1.png" width="100" height="100" style="display: inline-block">
+    <img src="media/ico2.png" width="100" height="100" style="display: inline-block; margin: 0 5vw;">
+    <img src="media/ico3.png" width="100" height="100" style="display: inline-block">
+  </div>
+
+  <div class="precise">
     <h3>average mood <br><span id="emozioneMedia">loading</span></h3>
     <h3>precise emotion <br><span id="preciso">loading</span></h3>
     <h3>generic emotion <br><span id="emotion">loading</span></h3>
     <h3>arousal level <br><span id="ar">?</span></h3>
     <h3>valence level <br><span id="va">?</span></h3>
   </div>
-  
-  <div id="upbar">
-    
+
+  <img src="media/logo.png" alt="" width="300" style="position: fixed; top: 100px; left: 50vw; transform: translateX(-50%); display: block">
+
+
+
+  <div id="upbar" style="display: block">
+
     <!-- CONTROLLI -->
-      <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 1vw; display: none;">
+      <button onclick="onConnectUsb()" id="connect-usb" style="margin-right: 1vw; display: block; background-color: #DBE9EA; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">
         <i class="fa fa-usb" aria-hidden="true"></i>
       </button>
 
@@ -107,23 +134,26 @@
     <p class="timeTitle"><span id="timer"></span></p>
 
     <!-- EMOZIONI -->
-  
-    <audio id="audioObj" src="media/base.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio0" src="media/triste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio1" src="media/audio.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio2" src="media/noFear.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio3" src="media/noTriste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio4" src="media/noNeutral.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio5" src="media/piuSorpreso.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
-    <audio id="audio6" src="media/piuHappy.m4a" loop></audio>
   </div>
 
-  <div style="position: absolute; bottom: 12vh; right:2vw;">
+  <audio id="audioObj" src="media/base.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio0" src="media/triste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio1" src="media/audio.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio2" src="media/noFear.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio3" src="media/noTriste.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio4" src="media/noNeutral.mp3" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio5" src="media/piuSorpreso.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+  <audio id="audio6" src="media/piuHappy.m4a" loop onplay="audioVolumeIn(this);" onpause="audioVolumeOut(this)"></audio>
+
+
+  <div id="parentAssistant"></div>
+
+  <div style="position: absolute; bottom: 12vh; right:2vw;display:none">
     <input type="submit" style="width:20vw;" value="Capture" onclick="capture();" />
   </div>
 
   <!-- GRAFICI -->
-  <div id="schemi" style="display:inline-block;">
+  <div id="schemi" style="display:inline-block;display:none">
     <div id="container"></div>
     <div id="containerPlus"></div>
     <div class="chart-container"><canvas id="chart" style="height: 160px; display: none;"></canvas></div>
@@ -131,46 +161,6 @@
 
 </div>
 
-<!-- BG EFFECT
-  <div id="bg-wrap" style="position: absolute; z-index: -1; top: 0; width: 100vw; height:100vh; left:0%;">
-    <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5">
-          <animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-          <stop class="prova1" offset="0%"></stop>
-          <stop class="prova2" offset="100%"></stop>
-        </radialGradient>
-        <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5">
-          <animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-          <stop class="prova1" offset="0%"></stop>
-          <stop class="prova2" offset="100%"></stop>
-        </radialGradient>
-        <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5">
-          <animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate>
-          <stop class="prova1" offset="0%"></stop>
-          <stop class="prova2" offset="100%"></stop>
-        </radialGradient>
-      </defs>
-
-      <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)">
-        <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate>
-        <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate>
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite"></animateTransform>
-      </rect>
-      <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)" transform="rotate(255.072 50 50)">
-        <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate>
-        <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate>
-        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s" repeatCount="indefinite"></animateTransform>
-      </rect>
-      <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)" transform="rotate(139.903 50 50)">
-        <animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate>
-        <animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate>
-        <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s" repeatCount="indefinite"></animateTransform>
-      </rect>
-    </svg>
-  </div>
-  -->
-  
   <script src="https://sdk.morphcast.com/mphtools/v1.0/mphtools.js"> </script>
   <script src="https://ai-sdk.morphcast.com/v1.15/ai-sdk.js"></script>
 
@@ -183,10 +173,10 @@
 
   </script>
 
-<canvas id="leap-overlay" style="z-index: 1000; pointer-events: none;"></canvas>
-<script src="//js.leapmotion.com/0.2.0-beta1/leap.min.js"></script>
+<!-- <canvas id="leap-overlay" style="z-index: 1000; pointer-events: none;"></canvas>
+<script src="//js.leapmotion.com/0.2.0-beta1/leap.min.js"></script> -->
 
-<script>
+<!-- <script>
 var canvas = document.getElementById("leap-overlay");
 
 // fullscreen
@@ -224,7 +214,7 @@ Leap.loop(draw);
 <style>
 html, body { width: 100%; height: 100%; margin: 0; padding: 0}
 #leap-overlay { position: fixed; top: 0; left: 0;}
-</style>
+</style> -->
 
 </body>
 

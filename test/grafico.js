@@ -17,6 +17,17 @@ audio4 = $('#audio4').get(0);
 audio5 = $('#audio5').get(0);
 audio6 = $('#audio6').get(0);
 
+audioObj.volume = 0.4;
+audio0.volume = 0.4;
+audio1.volume = 0.4;
+audio2.volume = 0.4;
+audio3.volume = 0.4;
+audio4.volume = 0.4;
+audio5.volume = 0.4;
+audio6.volume = 0.4;
+
+var videoFinito = false;
+
 var audioinplay = null
 
 var coloreParticelle = document.getElementById('particelle');
@@ -72,20 +83,53 @@ function lightbox_open() {
 
 function lightbox_close() {
   var lightBoxVideo = document.getElementById("VisaChipCardVideo");
-  document.getElementById('light').style.display = 'none';
-  document.getElementById('fade').style.display = 'none';
-  //lightBoxVideo.pause();
+
+	lightBoxVideo.pause();
+	lightBoxVideo.style.display = "none"
   //prepareFrame();
 
-  // set timer
-  document.getElementById('timer').innerHTML =
-    00 + ":" + 00;
-  //startTimer();
-  chronoStart();
+	document.getElementById('light').style.display = 'block';
+	document.getElementById('fade').style.display = 'block';
 
-  // play music
-  audioObj.play();
-	audioinplay = 'audioObj';
+	video = document.createElement('video');
+
+	document.getElementById('light').appendChild(video)
+
+	video.src = 'assistant/adjIntro.webm';
+	video.autoplay = true;
+	video.playsinline = true;
+	video.type = "video/webm";
+	video.setAttribute("width", "1080");
+	video.setAttribute("height", "1080");
+	video.id = "assistantIntro"
+
+	video.addEventListener('ended', (event) => {
+		video.removeAttribute('src');
+		video.load();
+		video.remove();
+
+		startAll();
+	});
+
+}
+
+function startAll() {
+
+	document.getElementById('light').style.display = 'none';
+	document.getElementById('fade').style.display = 'none';
+
+
+		videoFinito = true;
+
+	  // set timer
+	  document.getElementById('timer').innerHTML =
+	    00 + ":" + 00;
+	  //startTimer();
+	  chronoStart();
+
+	  // play music
+	  audioObj.play();
+		audioinplay = 'audioObj';
 }
 
 var startTime = 0
@@ -370,14 +414,16 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
     varpiufreq = mode(storicoEmozioni)
 
-    console.log(storicoEmozioni, varpiufreq)
-		console.log(audioinplay)
+    // console.log(storicoEmozioni, varpiufreq)
+		// console.log(audioinplay)
 
     var larghezzaContainer = 100;
 
     $(".square").css("width", larghezzaContainer / checker + "%")
 
     $(".squarePlus").css("width", larghezzaContainer / checker + "%")
+
+		var checkNeutralita = 0
 
 // EMOZIONI MEDIE
 
@@ -389,7 +435,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         if (varpiufreq == 0) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Rabbia";
           r.style.setProperty('--color-1', '#FFF2CE');
@@ -406,7 +452,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         } else if (varpiufreq == 1) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Disgusto"
           r.style.setProperty('--color-1', '#4C86C1');
@@ -423,7 +469,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         } else if (varpiufreq == 2) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Paura"
           r.style.setProperty('--color-1', '#C990EC');
@@ -440,7 +486,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         } else if (varpiufreq == 3) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Triste"
           r.style.setProperty('--color-1', '#8CC444');
@@ -457,7 +503,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         } else if (varpiufreq == 4) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Neutrale"
           r.style.setProperty('--color-1', '#FFA941');
@@ -470,14 +516,19 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 						audioinplay = 'audio4';
 					}
 
-          setTimeout(function() {
-            console.log("neutrale per troppo tempo")
-            stimolaNeutrale();
-          }, 20000);
+					checkNeutralita ++
+					// console.log(checkNeutralita)
+
+					if (checkNeutralita >= 2) {
+						setTimeout(function() {
+	            console.log("neutrale per troppo tempo")
+	            stimolaNeutrale();
+	          }, 2000);
+					}
 
         } else if (varpiufreq == 5) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Sorpreso"
           r.style.setProperty('--color-1', '#2acbd6');
@@ -492,7 +543,7 @@ window.addEventListener(CY.modules().DATA_AGGREGATOR.eventName, (evt) => {
 
         } else if (varpiufreq == 6) {
           ragazzi = ragazzi + 1;
-          console.log("i ragazzi sono ",ragazzi);
+          // console.log("i ragazzi sono ",ragazzi);
 
           document.getElementById("emozioneMedia").innerHTML = "Felicità"
           //r.style.setProperty('--color-1', colorRainbow);
@@ -848,8 +899,40 @@ async function felice() {
   return;
 }
 
+var video
+var parentA = document.getElementById("parentAssistant")
+
+function updateAssistant(qualeAssistente) {
+	document.querySelectorAll('.assistant').forEach(e => e.remove());
+
+	video = document.createElement('video');
+
+	parentA.appendChild(video)
+
+	video.src = 'assistant/' + qualeAssistente + '.webm';
+	video.autoplay = true;
+	video.playsinline = true;
+	video.type = "video/webm";
+	video.setAttribute("width", "400");
+	video.setAttribute("height", "400");
+	// video.setAttribute("controls", "false");
+	video.className = "assistant"
+
+	video.addEventListener('ended', (event) => {
+		video.removeAttribute('src');
+		video.load();
+		video.remove();
+	});
+}
+
+
 //EMOZIONI ARDUINO
 async function adjArrabbiato() {
+
+	if (videoFinito) {
+		updateAssistant("adjAngry")
+	}
+
   if (isConnectted) {
     await writer.write(enc.encode(`255-75-0@`)); //warm color
     return;
@@ -857,6 +940,11 @@ async function adjArrabbiato() {
 }
 
 async function adjDisgusto() {
+
+	if (videoFinito) {
+		updateAssistant("adjDisgust")
+	}
+
   if (isConnectted) {
     await writer.write(enc.encode(`75-35-230@`)); //blue
     return;
@@ -864,6 +952,11 @@ async function adjDisgusto() {
 }
 
 async function adjPaura() {
+
+	if (videoFinito) {
+		updateAssistant("adjFear")
+	}
+
   if (isConnectted) {
     await writer.write(enc.encode(`255-0-255@`)); //purple
     return;
@@ -871,6 +964,11 @@ async function adjPaura() {
 }
 
 async function adjTriste() {
+
+	if (videoFinito) {
+		updateAssistant("adjSadness")
+	}
+
   if (isConnectted) {
     await writer.write(enc.encode(`120-225-0@`)); //warm green
     return;
@@ -878,6 +976,11 @@ async function adjTriste() {
 }
 
 async function stimolaNeutrale() {
+
+	if (videoFinito) {
+		updateAssistant("adjNeutral")
+	}
+
   if (isConnectted) {
     await writer.write(enc.encode(`255-0-0@`)); //orange
     return;
@@ -1073,7 +1176,7 @@ function reload_page() {
 function audioVolumeIn(q) {
   if (q.volume) {
     var InT = 0;
-    var setVolume = 1; // Target volume level for new song
+    var setVolume = 0.4; // Target volume level for new song
     var speed = 0.005; // Rate of increase
     q.volume = InT;
     var eAudio = setInterval(function() {
